@@ -1,5 +1,4 @@
 env
 *.DS_Store
 *.pyc
-*.sqlite3
 __pycache__
