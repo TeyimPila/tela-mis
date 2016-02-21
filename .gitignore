@@ -1,5 +1,5 @@
 env
-.idea
+.idea/
 *.DS_Store
 *.pyc
 *.sqlite3
