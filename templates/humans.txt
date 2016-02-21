@@ -3,11 +3,13 @@
 
 # TEAM
 
-    <name> -- <role> -- <twitter>
+    Abdulmajid Hamza -- Developer -- Twitter: @D_Skampa
+    Teyim Muluh Pila -- Developer 
+    Justice Muma     -- Developer
 
 # THANKS
 
-    <name>
+    AUN TELA
 
 # TECHNOLOGY COLOPHON
 
