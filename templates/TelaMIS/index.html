@@ -1,5 +1,8 @@
 {# [Created by SkaeX @ 2016-02-21 16:30:40] #} 
 {% extends "base.html" %}
+{% load i18n %}
+{% load l10n %}
+{% load tz %}
 {% block head_title %}TELA{% endblock %}
 {% block body %}
 <!--[if lt IE 8]>
@@ -15,6 +18,11 @@
             <span class="icon-bar"></span>
           </button>
           <a class="navbar-brand" href="#">TELA MIS</a>
+
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="#" id="local-date">{{today}}</a></li>
+            <li><a href="#" id="non-local-date">{{today|unlocalize}}</a></li>
+          </ul>
         </div>
         
         </div><!--/.navbar-collapse -->
@@ -25,12 +33,18 @@
     <div class="container">
     <div class="jumbotron">
       <div class="container">
-        <h1>TELA Management Information System</h1>
-        <p>This is a template for the proposed management information system for the AUN TELA project</p>
+        <h1>{% trans "TELA M<small>anagement</small> I<small>nformation</small> S<small>ystem</small>"%}</h1>
+        <p>{% blocktrans %}This is a template for the proposed management information system for the 
+          AUN TELA project {% endblocktrans %}</p>
       </div>
     </div>
 
-    
+    <h2>Time Zones</h2>
+    <p> Barcelona: <span id="time-tz">{{now|time:"H:i"}}</span></p>
+    <p> UTC: <span id="time-utc">{{now|utc|time:"H:i"}}</span></p>
+    <p> New York: <span id="time-ny"> 
+           {{now|timezone:"America/New_York"|time:"H:i"}}</span></p>
+   
 
       <hr>
 
