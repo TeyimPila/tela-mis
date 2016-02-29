@@ -6,4 +6,3 @@ env
 __pycache__
 .coverage
 htmlcov
-secret*
