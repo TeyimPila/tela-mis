@@ -23,7 +23,7 @@ class BeneficiaryModelTest(TestCase):
         beneficiary = Beneficiary(beneficiary_name="Name of Beneficiary")
         self.assertEqual(str(beneficiary), beneficiary.beneficiary_name)
 
-    
+
 
 
 

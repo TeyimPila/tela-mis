@@ -13,14 +13,16 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Beneficiary',
             fields=[
-                ('id', models.AutoField(verbose_name='ID', serialize=False, primary_key=True, auto_created=True)),
+                ('id', models.AutoField(auto_created=True, serialize=False, verbose_name='ID', primary_key=True)),
                 ('beneficiary_id', models.CharField(max_length=20)),
-                ('beneficiary_name', models.CharField(max_length=225)),
-                ('is_in_school', models.BinaryField(default=True)),
+                ('first_name', models.CharField(max_length=225)),
+                ('last_name', models.CharField(max_length=225)),
+                ('is_in_school', models.BooleanField(verbose_name='is in School?', default=True)),
                 ('gender', models.CharField(max_length=1, choices=[('M', 'Male'), ('F', 'Female')])),
+                ('year_of_birth', models.IntegerField(verbose_name='year of birth', default=2016)),
             ],
             options={
-                'verbose_name_plural': 'Beneficiaries',
+                'verbose_name_plural': 'beneficiaries',
             },
         ),
     ]
