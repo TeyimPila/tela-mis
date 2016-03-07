@@ -4,6 +4,10 @@ from django.db import models
 
 
 class Neighborhood(models.Model):
+    """
+    This model holds information about the neighborhood from which
+    participants of the TELA project come from
+    """
     neigh_id = models.IntegerField(unique=True)
     name = models.CharField(max_length=200)
 
