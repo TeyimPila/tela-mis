@@ -8,3 +8,4 @@ __pycache__
 htmlcov
 secret*
 /TelaMIS/secret.py
+/tela/migrations
