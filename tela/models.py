@@ -7,7 +7,7 @@ class Tutor(models.Model):
     """this class stores the information of tutors,
     who are AUN students taking part in the tutoring"""
 
-    #centers = models.ManyToManyField(Center)
+    # centers = models.ManyToManyField(Center)
 
     CLASSIFICATION_CHOICES = (
         ('FR', 'Freshman'),
@@ -17,7 +17,7 @@ class Tutor(models.Model):
         ('GR', 'Graduate'),
     )
 
-    tutor_id = models.CharField(max_length=15)
+    tutor_id = models.CharField(max_length=9)
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
     email = models.EmailField()
