@@ -1,5 +1,6 @@
 from django.db import models
 
+
 class Fascilitator(models.Model):
     #center = models.ForeignKey(Center)
     first_name = models.CharField(max_length=50)
