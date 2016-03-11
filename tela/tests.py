@@ -1,6 +1,7 @@
 from django.test import TestCase
 from .models import Beneficiary
 from .models import Assessment
+from .models import Enumerator
 
 # Create your tests here.
 
@@ -8,7 +9,8 @@ class TestAssessment(TestCase):
 
     def setUp(self):
         self.beneficiary = Beneficiary.objects.create(first_name = "first name", last_name="last name")
-        self.assessment = Assessment.objects.create(beneficiary = self.beneficiary, type="ass type")
+        self.enumerator = Enumerator.objects.create(first_name = "first name", last_name="last name")
+        self.assessment = Assessment.objects.create(beneficiary = self.beneficiary, enumerator = self.enumerator, type="ass type")
 
     def test_assessment_creation(self):
         """
@@ -17,6 +19,7 @@ class TestAssessment(TestCase):
         """
         self.assertEqual(self.assessment.type, "ass type")
         self.assertEqual(self.assessment.beneficiary, self.beneficiary)
+        self.assertEqual(self.assessment.enumerator, self.enumerator)
 
     def test_assessment_string_representation(self):
         """
