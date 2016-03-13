@@ -3,9 +3,11 @@ from .models import Equipment
 from .models import Facilitator
 from django.db import IntegrityError
 
+from .models import Tutor
+
+
 
 # Create your tests here.
-
 class TestEquipmentModel(TestCase):
 
     def test_regular(self):
@@ -66,3 +68,21 @@ class TestEquipmentModel(TestCase):
         #     equipment = Equipment.objects.create(serial_number="A12345", equipment_type="Radio",
         #                                          availability='available')
         #     self.assertTrue(isinstance(Equipment,  equipment))
+||||||| merged common ancestors
+=======
+
+
+class TestTutor(TestCase):
+    """
+    this tests properties of the Tutor Model
+    """
+
+    def setUp(self):
+        Tutor.objects.create(tutor_id="A00012345", first_name="Tutor Fname", last_name="Tutor last name",
+                             email="tutor.email@example.com", major="Tutor's major", classification="FR")
+
+    def test_tutor_creation(self):
+        tutor = Tutor.objects.get(first_name="Tutor Fname", last_name="Tutor last name")
+        self.assertTrue(isinstance(tutor, Tutor))
+        self.assertEqual(tutor.__str__(), "%s %s" % (tutor.first_name, tutor.last_name))
+>>>>>>> feature/add-models
