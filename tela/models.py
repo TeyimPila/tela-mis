@@ -5,7 +5,7 @@ from django.utils import timezone
 # Create your models here.
 
 class Facilitator(models.Model):
-    name = ''
+    first_name = models.CharField(max_length=50)
 
 
 class Equipment(models.Model):
@@ -29,7 +29,7 @@ class Equipment(models.Model):
         ('Checked out', 'Checked Out'),
     )
 
-    serial_number = models.CharField(max_length=20, unique=True, null=False)
+    serial_num = models.CharField(max_length=20, unique=True, null=False)
     equipment_type = models.CharField(max_length=15, choices=TYPE_CHOICES, blank=False)
     status = models.CharField(max_length=7, choices=STATUS_CHOICES, default=STATUS_CHOICES[0][0])
 
@@ -68,3 +68,4 @@ class Equipment(models.Model):
 
     class Meta:
         verbose_name_plural = 'equipment'
+        unique_together = ('facilitator', 'serial_num')
