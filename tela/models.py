@@ -4,12 +4,9 @@ from django.utils import timezone
 
 # Create your models here.
 
-class Facilitator(models.Model):
-    first_name = models.CharField(max_length=50)
-
 
 class Equipment(models.Model):
-    facilitator = models.ForeignKey(Facilitator, on_delete=models.CASCADE, null=True, blank=True)
+    # facilitator = models.ForeignKey(Facilitator, on_delete=models.CASCADE, null=True, blank=True)
 
     TYPE_CHOICES = (
         ('Radio', 'Radio'),

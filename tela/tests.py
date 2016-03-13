@@ -1,6 +1,6 @@
 from django.test import TestCase
 from .models import Equipment
-from .models import Facilitator
+# from .models import Facilitator
 from django.db import IntegrityError
 
 from .models import Tutor
@@ -86,3 +86,39 @@ class TestTutor(TestCase):
         self.assertTrue(isinstance(tutor, Tutor))
         self.assertEqual(tutor.__str__(), "%s %s" % (tutor.first_name, tutor.last_name))
 >>>>>>> feature/add-models
+||||||| merged common ancestors
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        #
+        # def setUp(self):
+        #     self.equipment = Equipment.objects.create(serial_number="A12345", equipment_type="Radio",
+        #                                               availability='available')
+        #     self.equipment = Equipment.objects.create(serial_number="A12346", equipment_type="Radio",
+        #                                               availability='available')
+        #
+        # def test_equipment_creation(self):
+        #     """
+        #     tests that an equipment record can be created
+        #     :return:
+        #     """
+        #     equipment = Equipment.objects.create(serial_number="A12345", equipment_type="Radio",
+        #                                          availability='available')
+        #     self.assertTrue(isinstance(Equipment,  equipment))
+=======
+>>>>>>> origin/feature/equipment-model
