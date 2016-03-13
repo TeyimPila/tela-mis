@@ -1,5 +1,0 @@
-
-DATABASE_NAME = 'tela-mis'
-DATABASE_USER = 'root'
-DATABASE_PASSWORD = ''
-
