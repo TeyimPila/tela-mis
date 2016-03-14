@@ -136,8 +136,8 @@ class TestEquipmentModel(TestCase):
             Equipment.objects.create(facilitator=facilitator_1, serial_num=serial_num)
             Equipment.objects.create(facilitator=facilitator_2, serial_num=serial_num)
 
-        equipment_1 = [facilitator_1.first_name for facilitator in facilitator_1.equipment_set.all()]
-        equipment_2 = [facilitator_1.first_name for facilitator in facilitator_2.equipment_set.all()]
+        equipment_1 = [facilitator_1.first_name in facilitator_1.equipment_set.all()]
+        equipment_2 = [facilitator_1.first_name in facilitator_2.equipment_set.all()]
         self.assertEqual(equipment_1, equipment_2, ['id1', 'id2', 'id3'])
 
     def test_uniqueness(self):
