@@ -215,3 +215,13 @@ class TutorialType(models.Model):
 
     def __str__(self):
         return self.tutorial_type
+
+class Enumerator(models.Model):
+
+    first_name = models.CharField(max_length=30)
+    last_name = models.CharField(max_length=30)
+    phone_number = models.CharField(max_length=14)
+    email = models.EmailField()
+
+    def __str__(self):
+        return "%s %s" %(self.first_name, self.last_name)
