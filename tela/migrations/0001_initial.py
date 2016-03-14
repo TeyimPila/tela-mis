@@ -11,12 +11,11 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
-            name='Venue',
+            name='Center',
             fields=[
-                ('id', models.AutoField(serialize=False, auto_created=True, primary_key=True, verbose_name='ID')),
-                ('address', models.CharField(max_length=300)),
-                ('location_latitude', models.CharField(verbose_name='Latitude', max_length=20, blank=True, null=True)),
-                ('location_longitude', models.CharField(verbose_name='latitude', max_length=20, blank=True, null=True)),
+                ('id', models.AutoField(primary_key=True, serialize=False, auto_created=True, verbose_name='ID')),
+                ('title', models.CharField(max_length=50)),
+                ('group_size', models.IntegerField()),
             ],
         ),
     ]

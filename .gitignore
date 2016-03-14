@@ -6,6 +6,9 @@ env
 __pycache__
 .coverage
 htmlcov
-TelaMIS/secret.py
+TelaMIS/secret
+/secret.py
 /TelaMIS/secret.py
-/tela/migrations
+TelaMIS/secret.py
+
+

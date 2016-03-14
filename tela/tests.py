@@ -1,12 +1,81 @@
 from django.test import TestCase
 
+
 from .models import LocalGovArea
 
-from .models import Neighborhood
+from .models import Center
+class CenterTest(TestCase):
+    def create_venue(self, title='Yola Center', group_size=23):
+        return Center.objects.create(title=title, group_size=group_size)
 
+    def test_venue(self):
+        c = self.create_venue()
+        return self.assertTrue(isinstance(c, Center))
+
+    def test_center_str_method(self):
+        c = Center(title='Yola Center')
+        self.assertEqual(c.__str__(), "Yola Center")
+
+from .models import Beneficiary
+from .models import Assessment
+from .models import Enumerator
+
+
+# Create your tests here.
+
+class TestAssessment(TestCase):
+
+    def setUp(self):
+        self.beneficiary = Beneficiary.objects.create(first_name = "first name", last_name="last name")
+        self.enumerator = Enumerator.objects.create(first_name = "first name", last_name="last name")
+        self.assessment = Assessment.objects.create(beneficiary = self.beneficiary, enumerator = self.enumerator, type="ass type")
+
+    def test_assessment_creation(self):
+        """
+        test that an assessment can be created
+        :return:
+        """
+        self.assertEqual(self.assessment.type, "ass type")
+        self.assertEqual(self.assessment.beneficiary, self.beneficiary)
+        self.assertEqual(self.assessment.enumerator, self.enumerator)
+
+    def test_assessment_string_representation(self):
+        """
+        test that assessment object is represented as: first_name Last name's Pre assessment
+        :return:
+        """
+        self.assertEqual(self.assessment.__str__(), '%s\'s %s' %(self.beneficiary, self.assessment.type))
+
+
+from .models import Neighborhood
+from .models import Beneficiary, Neighborhood, Venue
+
+
+
+
+class BeneficiaryModelTest(TestCase):
+    """
+    This class contains all the test cases for the Beneficiary Model
+    """
+    def test_verbose_name_plural(self):
+        """
+        The plural of beneficiary should be beneficiaries
+        :return:
+        """
+        self.assertEqual(str(Beneficiary._meta.verbose_name_plural), "Beneficiaries")
+
+    def test_string_representation(self):
+        """
+        A beneficiary class object name should return the name of the beneficiary, not 'object'
+        :return:
+        """
+        beneficiary = Beneficiary(beneficiary_name="Name of Beneficiary")
+        self.assertEqual(str(beneficiary), beneficiary.beneficiary_name)
 
 
 from .models import Venue
+from .models import TutorialType
+
 
 class VenueTest(TestCase):
 
@@ -145,8 +214,18 @@ class TestTutor(TestCase):
         self.assertTrue(isinstance(tutor, Tutor))
         self.assertEqual(tutor.__str__(), "%s %s" % (tutor.first_name, tutor.last_name))
 
+class TesTutorialType(TestCase):
+    """
+    this tests properties of the Tutor Model
+    """
 
+    def setUp(self):
+        TutorialType.objects.create(tutorial_type = "type of tutorial")
 
+    def test_tutorial_type_creation(self):
+        tutorial_type = TutorialType.objects.get(tutorial_type = "type of tutorial")
+        self.assertTrue(isinstance(tutorial_type, TutorialType))
+        self.assertEqual(tutorial_type.__str__(), tutorial_type.tutorial_type)
 
 
 

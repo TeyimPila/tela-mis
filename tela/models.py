@@ -2,6 +2,46 @@ from django.db import models
 from django.utils import timezone
 
 
+import datetime
+
+class Beneficiary(models.Model):
+    # lga = models.ForeignKey(
+    #     LGA,
+    #     on_delete=models.CASCADE,
+    #     verbose_name="Local Government Area",
+    # )
+    #
+    # center = models.ForeignKey(
+    #     Center,
+    #     on_delete=models.CASCADE,
+    #     verbose_name="related center",
+    # )
+
+    GENDER = (
+        ('M', 'Male'),
+        ('F', 'Female')
+    )
+
+    beneficiary_id = models.CharField(max_length=20)
+    first_name = models.CharField(max_length=225)
+    last_name = models.CharField(max_length=225)
+    is_in_school = models.BooleanField(default=True, verbose_name='is in School?')
+    gender = models.CharField(max_length=1, choices=GENDER)
+    year_of_birth = models.IntegerField('year of birth', default=timezone.now().year)
+
+    def _get_age(self):
+        year = timezone.now().year
+        return year - self.year_of_birth
+
+    beneficiary_age = property(_get_age)
+
+    def __str__(self):
+        return u'%s %s' % (self.first_name, self.last_name)
+
+    class Meta:
+        verbose_name_plural = 'beneficiaries'
+
+
 class Venue(models.Model):
     address = models.CharField(max_length=300)
     location_latitude = models.CharField('Latitude', max_length=20, null=True, blank=True)
@@ -120,6 +160,7 @@ class Tutor(models.Model):
 
 
 
+
 # Create your models here.
 
 class LocalGovArea(models.Model):
@@ -132,3 +173,50 @@ class LocalGovArea(models.Model):
 
     def __str__(self):
         return self.name
+
+class Center(models.Model):
+    #venue = models.ForeignKey(Venue)
+    title = models.CharField(max_length=50)
+    group_size = models.IntegerField()
+
+    def __str__(self):
+        return self.title
+
+
+
+# Create your models here.
+
+
+class Assessment (models.Model):
+
+    # beneficiary = models.ForeignKey(Beneficiary, on_delete=models.CASCADE)
+    # enumerator = models.ForeignKey(Enumerator, on_delete=models.CASCADE)
+
+    ASSESSMENT_TYPES = (
+        ('Pre-Assessment', 'Pre-assessment'),
+        ('Post-Assessment', 'Post-Assessment'),
+    )
+
+    type = models.CharField(max_length=16, choices=ASSESSMENT_TYPES)
+
+    def __str__(self):
+        return '%s\'s %s' % (self.beneficiary, self.type)
+
+class TutorialType(models.Model):
+
+    """
+    this model defines the type of tutorials that can possibly be carried out at any given center
+    this model has a many to many field in the center model
+    """
+    TUTORIAL_TYPES=(
+        ('Feed and Read', 'Feed and Read'),
+        ('After School Tutorial', 'After School Tutorial'),
+        ('Face to Face', 'Tutorial'),
+        ('Radio Tutorial', 'Radio Tutorial'),
+    )
+    tutorial_type = models.CharField(max_length=50, choices=TUTORIAL_TYPES)
+
+    def __str__(self):
+        return self.tutorial_type
+
+
