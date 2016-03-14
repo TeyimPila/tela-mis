@@ -159,6 +159,14 @@ class Tutor(models.Model):
         return "%s %s" % (self.first_name, self.last_name)
 
 
+class Center(models.Model):
+    #venue = models.ForeignKey(Venue)
+    title = models.CharField(max_length=50)
+    group_size = models.IntegerField()
+
+    def __str__(self):
+        return self.title
+
 
 
 # Create your models here.
@@ -195,5 +203,6 @@ class TutorialType(models.Model):
 
     def __str__(self):
         return self.tutorial_type
+
 
 
