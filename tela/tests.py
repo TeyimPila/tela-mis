@@ -1,15 +1,12 @@
 from django.test import TestCase
-
-
-
-from .models import LocalGovArea
-
-from .models import Facilitator
+from .models import Beneficiary, Assessment, Enumerator, Center, Neighborhood, Venue, TutorialType, Equipment, \
+    Facilitator, Tutor, LocalGovArea
+from django.db import IntegrityError
 
 
 class FacilitatorTest(TestCase):
-
-    def create_Facilitator(self, first_name='Fatima', last_name='Hafsat', phone='0813456789', email='example@yahoo.com', age=21):
+    def create_Facilitator(self, first_name='Fatima', last_name='Hafsat', phone='0813456789', email='example@yahoo.com',
+                           age=21):
         return Facilitator.objects.create(first_name=first_name, last_name=last_name, phone=phone, email=email, age=age)
 
     def test_Facilitator(self):
@@ -21,7 +18,6 @@ class FacilitatorTest(TestCase):
         return self.assertEqual(f.__str__(), "Fatima Umar")
 
 
-from .models import Center
 class CenterTest(TestCase):
     def create_venue(self, title='Yola Center', group_size=23):
         return Center.objects.create(title=title, group_size=group_size)
@@ -35,19 +31,12 @@ class CenterTest(TestCase):
         self.assertEqual(c.__str__(), "Yola Center")
 
 
-from .models import Beneficiary
-from .models import Assessment
-from .models import Enumerator
-
-
-# Create your tests here.
-
 class TestAssessment(TestCase):
-
     def setUp(self):
-        self.beneficiary = Beneficiary.objects.create(first_name = "first name", last_name="last name")
-        self.enumerator = Enumerator.objects.create(first_name = "first name", last_name="last name")
-        self.assessment = Assessment.objects.create(beneficiary = self.beneficiary, enumerator = self.enumerator, type="ass type")
+        self.beneficiary = Beneficiary.objects.create(first_name="first name", last_name="last name")
+        self.enumerator = Enumerator.objects.create(first_name="first name", last_name="last name")
+        self.assessment = Assessment.objects.create(beneficiary=self.beneficiary, enumerator=self.enumerator,
+                                                    type="ass type")
 
     def test_assessment_creation(self):
         """
@@ -63,19 +52,14 @@ class TestAssessment(TestCase):
         test that assessment object is represented as: first_name Last name's Pre assessment
         :return:
         """
-        self.assertEqual(self.assessment.__str__(), '%s\'s %s' %(self.beneficiary, self.assessment.type))
-
-
-from .models import Neighborhood
-from .models import Beneficiary, Neighborhood, Venue
-
-
+        self.assertEqual(self.assessment.__str__(), '%s\'s %s' % (self.beneficiary, self.assessment.type))
 
 
 class BeneficiaryModelTest(TestCase):
     """
     This class contains all the test cases for the Beneficiary Model
     """
+
     def test_verbose_name_plural(self):
         """
         The plural of beneficiary should be beneficiaries
@@ -92,14 +76,11 @@ class BeneficiaryModelTest(TestCase):
         self.assertEqual(str(beneficiary), beneficiary.beneficiary_name)
 
 
-from .models import Venue
-from .models import TutorialType
-
-
 class VenueTest(TestCase):
-
-    def create_venue(self, address='This is a test address', location_longitude='127.98374', location_latitude='124.7387484'):
-        return Venue.objects.create(address=address, location_longitude=location_longitude, location_latitude=location_latitude)
+    def create_venue(self, address='This is a test address', location_longitude='127.98374',
+                     location_latitude='124.7387484'):
+        return Venue.objects.create(address=address, location_longitude=location_longitude,
+                                    location_latitude=location_latitude)
 
     def test_venue_instance_creation(self):
         v = self.create_venue()
@@ -108,21 +89,6 @@ class VenueTest(TestCase):
     def test_venue_get_coordinate_method(self):
         v = Venue(location_latitude='123.98746', location_longitude='165.987636')
         self.assertEqual(v.get_coordinates(), "(123.98746,165.987636)")
-
-
-
-
-
-from .models import Equipment
-# from .models import Facilitator
-from django.db import IntegrityError
-
-from .models import Tutor
-
-
-
-
-# Create your tests here.
 
 
 class TestLGA(TestCase):
@@ -147,8 +113,8 @@ class TestLGA(TestCase):
         lga = LocalGovArea.objects.get(name="The local Government Area")
         self.assertEqual(lga.__str__(), lga.name)
 
-class TestNeighborhood(TestCase):
 
+class TestNeighborhood(TestCase):
     def setUp(self):
         Neighborhood.objects.create(name="The Neighborhood name")
 
@@ -157,8 +123,8 @@ class TestNeighborhood(TestCase):
         self.assertTrue(isinstance(neigh, Neighborhood))
         self.assertEqual(neigh.__str__(), neigh.name)
 
-class TestEquipmentModel(TestCase):
 
+class TestEquipmentModel(TestCase):
     def test_regular(self):
         """
         test that a single facilitator can collect multiple equipment but not vice versa
@@ -179,44 +145,11 @@ class TestEquipmentModel(TestCase):
         """
         test that each equipment/facilitator record are unique
         """
-        facilitator = Facilitator.objects.create(first_name = 'fn')
+        facilitator = Facilitator.objects.create(first_name='fn')
         Equipment.objects.create(facilitator=facilitator, serial_num='sn')
 
         with self.assertRaises(IntegrityError):
             Equipment.objects.create(facilitator=facilitator, serial_num='sn')
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        #
-        # def setUp(self):
-        #     self.equipment = Equipment.objects.create(serial_number="A12345", equipment_type="Radio",
-        #                                               availability='available')
-        #     self.equipment = Equipment.objects.create(serial_number="A12346", equipment_type="Radio",
-        #                                               availability='available')
-        #
-        # def test_equipment_creation(self):
-        #     """
-        #     tests that an equipment record can be created
-        #     :return:
-        #     """
-        #     equipment = Equipment.objects.create(serial_number="A12345", equipment_type="Radio",
-        #                                          availability='available')
-        #     self.assertTrue(isinstance(Equipment,  equipment))
 
 
 class TestTutor(TestCase):
@@ -233,46 +166,16 @@ class TestTutor(TestCase):
         self.assertTrue(isinstance(tutor, Tutor))
         self.assertEqual(tutor.__str__(), "%s %s" % (tutor.first_name, tutor.last_name))
 
+
 class TesTutorialType(TestCase):
     """
     this tests properties of the Tutor Model
     """
 
     def setUp(self):
-        TutorialType.objects.create(tutorial_type = "type of tutorial")
+        TutorialType.objects.create(tutorial_type="type of tutorial")
 
     def test_tutorial_type_creation(self):
-        tutorial_type = TutorialType.objects.get(tutorial_type = "type of tutorial")
+        tutorial_type = TutorialType.objects.get(tutorial_type="type of tutorial")
         self.assertTrue(isinstance(tutorial_type, TutorialType))
         self.assertEqual(tutorial_type.__str__(), tutorial_type.tutorial_type)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        #
-        # def setUp(self):
-        #     self.equipment = Equipment.objects.create(serial_number="A12345", equipment_type="Radio",
-        #                                               availability='available')
-        #     self.equipment = Equipment.objects.create(serial_number="A12346", equipment_type="Radio",
-        #                                               availability='available')
-        #
-        # def test_equipment_creation(self):
-        #     """
-        #     tests that an equipment record can be created
-        #     :return:
-        #     """
-        #     equipment = Equipment.objects.create(serial_number="A12345", equipment_type="Radio",
-        #                                          availability='available')
-        #     self.assertTrue(isinstance(Equipment,  equipment))
-
-
