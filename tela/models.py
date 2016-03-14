@@ -161,7 +161,7 @@ class Tutor(models.Model):
 
 
 
-class Fascilitator(models.Model):
+class Facilitator(models.Model):
     #center = models.ForeignKey(Center)
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
