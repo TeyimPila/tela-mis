@@ -50,6 +50,7 @@ INSTALLED_APPS = (
     'tela',
 )
 
+
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.locale.LocaleMiddleware',
