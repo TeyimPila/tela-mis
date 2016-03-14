@@ -1,4 +1,5 @@
 from django.test import TestCase
+from .models import Neighborhood
 
 
 
@@ -30,6 +31,18 @@ from .models import Tutor
 
 
 # Create your tests here.
+
+
+class TestNeighborhood(TestCase):
+
+    def setUp(self):
+        Neighborhood.objects.create(name="The Neighborhood name")
+
+    def test_neighborhood_creation(self):
+        neigh = Neighborhood.objects.get(name="The Neighborhood name")
+        self.assertTrue(isinstance(neigh, Neighborhood))
+        self.assertEqual(neigh.__str__(), neigh.name)
+
 class TestEquipmentModel(TestCase):
 
     def test_regular(self):
@@ -137,3 +150,4 @@ class TestTutor(TestCase):
         #     equipment = Equipment.objects.create(serial_number="A12345", equipment_type="Radio",
         #                                          availability='available')
         #     self.assertTrue(isinstance(Equipment,  equipment))
+
