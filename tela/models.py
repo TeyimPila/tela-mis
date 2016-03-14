@@ -120,6 +120,7 @@ class Tutor(models.Model):
 
 
 
+
 # Create your models here.
 
 
@@ -137,4 +138,22 @@ class Assessment (models.Model):
 
     def __str__(self):
         return '%s\'s %s' % (self.beneficiary, self.type)
+
+class TutorialType(models.Model):
+
+    """
+    this model defines the type of tutorials that can possibly be carried out at any given center
+    this model has a many to many field in the center model
+    """
+    TUTORIAL_TYPES=(
+        ('Feed and Read', 'Feed and Read'),
+        ('After School Tutorial', 'After School Tutorial'),
+        ('Face to Face', 'Tutorial'),
+        ('Radio Tutorial', 'Radio Tutorial'),
+    )
+    tutorial_type = models.CharField(max_length=50, choices=TUTORIAL_TYPES)
+
+    def __str__(self):
+        return self.tutorial_type
+
 
