@@ -8,5 +8,6 @@ __pycache__
 htmlcov
 TelaMIS/secret
 /secret.py
-
 /TelaMIS/secret.py
+TelaMIS/secret.py
+

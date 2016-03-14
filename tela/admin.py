@@ -17,3 +17,10 @@ class BeneficiaryAdmin(admin.ModelAdmin):
 
 admin.site.register(Beneficiary, BeneficiaryAdmin)
 
+
+from .models import Equipment
+
+# Register your models here.
+
+admin.site.register(Equipment)
+
