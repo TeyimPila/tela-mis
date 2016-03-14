@@ -92,7 +92,6 @@ class VenueTest(TestCase):
 
 
 class TestLGA(TestCase):
-
     def setUp(self):
         LocalGovArea.objects.create(name="The local Government Area")
 
@@ -137,8 +136,8 @@ class TestEquipmentModel(TestCase):
             Equipment.objects.create(facilitator=facilitator_1, serial_num=serial_num)
             Equipment.objects.create(facilitator=facilitator_2, serial_num=serial_num)
 
-        equipment_1 = [facilitator_1.first_name for facilitator in facilitator_1.equipment_set.all()]
-        equipment_2 = [facilitator_1.first_name for facilitator in facilitator_2.equipment_set.all()]
+        equipment_1 = [facilitator_1.first_name in facilitator_1.equipment_set.all()]
+        equipment_2 = [facilitator_1.first_name in facilitator_2.equipment_set.all()]
         self.assertEqual(equipment_1, equipment_2, ['id1', 'id2', 'id3'])
 
     def test_uniqueness(self):
@@ -179,3 +178,21 @@ class TesTutorialType(TestCase):
         tutorial_type = TutorialType.objects.get(tutorial_type="type of tutorial")
         self.assertTrue(isinstance(tutorial_type, TutorialType))
         self.assertEqual(tutorial_type.__str__(), tutorial_type.tutorial_type)
+
+
+class TestEnumerator(TestCase):
+    def setUp(self):
+        Enumerator.objects.create(first_name="first name", last_name="last name")
+
+    def test_enumerator_creation(self):
+        enum = Enumerator.objects.get(first_name='first name', last_name="last name")
+        self.assertTrue(isinstance(enum, Enumerator))
+        self.assertEqual(enum.__str__(), "first name last name")
+
+    def test_Facilitator(self):
+        f = self.create_Facilitator()
+        self.assertTrue(isinstance(f, Facilitator))
+
+    def test_Facilitator_str_method(self):
+        f = Facilitator(first_name='Fatima', last_name='Umar')
+        return self.assertEqual(f.__str__(), "Fatima Umar")
