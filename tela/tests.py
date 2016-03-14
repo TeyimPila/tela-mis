@@ -23,6 +23,10 @@ class BeneficiaryModelTest(TestCase):
         self.assertEqual(str(beneficiary), beneficiary.beneficiary_name)
 
 
+from .models import Venue
+from .models import TutorialType
+
+
 class VenueTest(TestCase):
 
     def create_venue(self, address='This is a test address', location_longitude='127.98374', location_latitude='124.7387484'):
@@ -136,6 +140,19 @@ class TestTutor(TestCase):
         tutor = Tutor.objects.get(first_name="Tutor Fname", last_name="Tutor last name")
         self.assertTrue(isinstance(tutor, Tutor))
         self.assertEqual(tutor.__str__(), "%s %s" % (tutor.first_name, tutor.last_name))
+
+class TesTutorialType(TestCase):
+    """
+    this tests properties of the Tutor Model
+    """
+
+    def setUp(self):
+        TutorialType.objects.create(tutorial_type = "type of tutorial")
+
+    def test_tutorial_type_creation(self):
+        tutorial_type = TutorialType.objects.get(tutorial_type = "type of tutorial")
+        self.assertTrue(isinstance(tutorial_type, TutorialType))
+        self.assertEqual(tutorial_type.__str__(), tutorial_type.tutorial_type)
 
 
 
