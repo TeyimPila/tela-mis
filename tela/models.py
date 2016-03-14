@@ -2,8 +2,6 @@ from django.db import models
 from django.utils import timezone
 
 
-import datetime
-
 class Beneficiary(models.Model):
     # lga = models.ForeignKey(
     #     LGA,
@@ -52,10 +50,6 @@ class Venue(models.Model):
 
     def get_coordinates(self):
         return "(%s,%s)" % (self.location_latitude, self.location_longitude)
-
-
-
-# Create your models here
 
 
 class Neighborhood(models.Model):
@@ -133,7 +127,6 @@ class Equipment(models.Model):
         unique_together = ('facilitator', 'serial_num')
 
 
-
 class Tutor(models.Model):
     """this class stores the information of tutors,
     who are AUN students taking part in the tutoring"""
@@ -160,7 +153,7 @@ class Tutor(models.Model):
 
 
 class Center(models.Model):
-    #venue = models.ForeignKey(Venue)
+    # venue = models.ForeignKey(Venue)
     title = models.CharField(max_length=50)
     group_size = models.IntegerField()
 
@@ -168,9 +161,8 @@ class Center(models.Model):
         return self.title
 
 
-
 class Facilitator(models.Model):
-    #center = models.ForeignKey(Center)
+    # center = models.ForeignKey(Center)
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
     phone = models.CharField(max_length=15)
@@ -178,14 +170,10 @@ class Facilitator(models.Model):
     age = models.IntegerField()
 
     def __str__(self):
-        return "%s %s" %(self.first_name, self.last_name)
+        return "%s %s" % (self.first_name, self.last_name)
 
 
-# Create your models here.
-
-
-class Assessment (models.Model):
-
+class Assessment(models.Model):
     # beneficiary = models.ForeignKey(Beneficiary, on_delete=models.CASCADE)
     # enumerator = models.ForeignKey(Enumerator, on_delete=models.CASCADE)
 
@@ -199,13 +187,13 @@ class Assessment (models.Model):
     def __str__(self):
         return '%s\'s %s' % (self.beneficiary, self.type)
 
-class TutorialType(models.Model):
 
+class TutorialType(models.Model):
     """
     this model defines the type of tutorials that can possibly be carried out at any given center
     this model has a many to many field in the center model
     """
-    TUTORIAL_TYPES=(
+    TUTORIAL_TYPES = (
         ('Feed and Read', 'Feed and Read'),
         ('After School Tutorial', 'After School Tutorial'),
         ('Face to Face', 'Tutorial'),
@@ -215,6 +203,3 @@ class TutorialType(models.Model):
 
     def __str__(self):
         return self.tutorial_type
-
-
-
