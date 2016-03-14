@@ -1,6 +1,6 @@
 from django.test import TestCase
 from .models import Beneficiary, Assessment, Enumerator, Center, Neighborhood, Venue, TutorialType, Equipment, \
-    Facilitator, Tutor
+    Facilitator, Tutor, LocalGovArea
 from django.db import IntegrityError
 
 
@@ -89,6 +89,29 @@ class VenueTest(TestCase):
     def test_venue_get_coordinate_method(self):
         v = Venue(location_latitude='123.98746', location_longitude='165.987636')
         self.assertEqual(v.get_coordinates(), "(123.98746,165.987636)")
+
+
+class TestLGA(TestCase):
+
+    def setUp(self):
+        LocalGovArea.objects.create(name="The local Government Area")
+
+    def test_LGA_creation(self):
+        """
+        this tests that each object of the LocalGovArea model is created properly
+        :return:
+        """
+        lga = LocalGovArea.objects.get(name="The local Government Area")
+        self.assertTrue(isinstance(lga, LocalGovArea))
+
+    def test_LGA_string_representation(self):
+        """
+        this tests that objects of the LocalGovArea have a name that is the same as the name attribute of the local
+        government area
+        :return:
+        """
+        lga = LocalGovArea.objects.get(name="The local Government Area")
+        self.assertEqual(lga.__str__(), lga.name)
 
 
 class TestNeighborhood(TestCase):

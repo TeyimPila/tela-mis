@@ -152,6 +152,18 @@ class Tutor(models.Model):
         return "%s %s" % (self.first_name, self.last_name)
 
 
+class LocalGovArea(models.Model):
+    """
+    This model defines the database table for storing information about the Local Government Areas from which
+    participants come
+    """
+
+    name = models.CharField(max_length=300)
+
+    def __str__(self):
+        return self.name
+
+
 class Center(models.Model):
     # venue = models.ForeignKey(Venue)
     title = models.CharField(max_length=50)
