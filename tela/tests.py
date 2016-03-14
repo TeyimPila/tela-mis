@@ -1,7 +1,25 @@
 from django.test import TestCase
 
 
+
 from .models import LocalGovArea
+
+from .models import Facilitator
+
+
+class FacilitatorTest(TestCase):
+
+    def create_Facilitator(self, first_name='Fatima', last_name='Hafsat', phone='0813456789', email='example@yahoo.com', age=21):
+        return Facilitator.objects.create(first_name=first_name, last_name=last_name, phone=phone, email=email, age=age)
+
+    def test_Facilitator(self):
+        f = self.create_Facilitator()
+        self.assertTrue(isinstance(f, Facilitator))
+
+    def test_Facilitator_str_method(self):
+        f = Facilitator(first_name='Fatima', last_name='Umar')
+        return self.assertEqual(f.__str__(), "Fatima Umar")
+
 
 from .models import Center
 class CenterTest(TestCase):
@@ -15,6 +33,7 @@ class CenterTest(TestCase):
     def test_center_str_method(self):
         c = Center(title='Yola Center')
         self.assertEqual(c.__str__(), "Yola Center")
+
 
 from .models import Beneficiary
 from .models import Assessment
