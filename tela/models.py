@@ -15,7 +15,19 @@ class Venue(models.Model):
 
 
 
-# Create your models here.
+# Create your models here
+
+
+class Neighborhood(models.Model):
+    """
+    This model holds information about the neighborhood from which
+    participants of the TELA project come from
+    """
+
+    name = models.CharField(max_length=200)
+
+    def __str__(self):
+        return self.name
 
 
 class Equipment(models.Model):
@@ -107,6 +119,7 @@ class Tutor(models.Model):
         return "%s %s" % (self.first_name, self.last_name)
 
 
+
 class TutorialType(models.Model):
 
     """
@@ -123,3 +136,4 @@ class TutorialType(models.Model):
 
     def __str__(self):
         return self.tutorial_type
+
