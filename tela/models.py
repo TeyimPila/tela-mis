@@ -3,17 +3,24 @@ from django.utils import timezone
 
 
 class Beneficiary(models.Model):
-    # lga = models.ForeignKey(
-    #     LGA,
-    #     on_delete=models.CASCADE,
-    #     verbose_name="Local Government Area",
-    # )
-    #
-    # center = models.ForeignKey(
-    #     Center,
-    #     on_delete=models.CASCADE,
-    #     verbose_name="related center",
-    # )
+    lga = models.ForeignKey(
+        LocalGovArea,
+        verbose_name="Local Government Area",
+        on_delete=models.SET_NULL,
+        null=True
+    )
+
+    center = models.ForeignKey(
+        Center,
+        on_delete=models.SET_NULL,
+        null=True,
+    )
+
+    neighborhood = models.ForeignKey(
+        Neighborhood,
+        on_delete=models.SET_NULL,
+        null=True,
+    )
 
     GENDER = (
         ('M', 'Male'),
@@ -34,22 +41,27 @@ class Beneficiary(models.Model):
     beneficiary_age = property(_get_age)
 
     def __str__(self):
-        return u'%s %s' % (self.first_name, self.last_name)
+        return '%s %s' % (self.first_name, self.last_name)
 
     class Meta:
         verbose_name_plural = 'beneficiaries'
 
 
 class Venue(models.Model):
+    """
+    This model defines the database table that will hold information about tutorial venues
+    """
     address = models.CharField(max_length=300)
     location_latitude = models.CharField('Latitude', max_length=20, null=True, blank=True)
-    location_longitude = models.CharField('latitude', max_length=20, null=True, blank=True)
+    location_longitude = models.CharField('longitude', max_length=20, null=True, blank=True)
+
+    def _get_coordinates(self):
+        return "(%s,%s)" % (self.location_latitude, self.location_longitude)
+
+    coordinate = property(_get_coordinates)
 
     def __str__(self):
         return "%s " % self.address
-
-    def get_coordinates(self):
-        return "(%s,%s)" % (self.location_latitude, self.location_longitude)
 
 
 class Neighborhood(models.Model):
@@ -65,7 +77,14 @@ class Neighborhood(models.Model):
 
 
 class Equipment(models.Model):
-    # facilitator = models.ForeignKey(Facilitator, on_delete=models.CASCADE, null=True, blank=True)
+
+    # equipment are handed over to facilitators, who then take the equipment to their various venues
+    facilitator = models.ForeignKey(
+        Facilitator,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True
+    )
 
     TYPE_CHOICES = (
         ('Radio', 'Radio'),
@@ -89,7 +108,7 @@ class Equipment(models.Model):
     equipment_type = models.CharField(max_length=15, choices=TYPE_CHOICES, blank=False)
     status = models.CharField(max_length=7, choices=STATUS_CHOICES, default=STATUS_CHOICES[0][0])
 
-    # the condition in which an equipment is returned
+    # the condition in which an equipment is returned from venues
     check_in_status = models.CharField(max_length=7, choices=STATUS_CHOICES, default=STATUS_CHOICES[0][0], null=True,
                                        blank=True)
     check_out_date = models.DateTimeField(null=True, blank=True)
@@ -105,7 +124,7 @@ class Equipment(models.Model):
             self.check_out_date = timezone.now()
             self.save()
 
-    def check_in(self, facilitator):
+    def check_in(self):
         """
         this method checks in an equipment when its being returned
         :param facilitator:
@@ -114,7 +133,7 @@ class Equipment(models.Model):
         if self.availability == self.AVAILABILITY_STATUS[0][0]:
             return "This Equipment was not checked out"
         else:
-            self.entry_set.remove(facilitator)
+            self.facilitator = None
             self.availability = self.AVAILABILITY_STATUS[0][0]
             self.date_returned = timezone.now()
             self.save()
@@ -128,10 +147,9 @@ class Equipment(models.Model):
 
 
 class Tutor(models.Model):
-    """this class stores the information of tutors,
-    who are AUN students taking part in the tutoring"""
-
-    # centers = models.ManyToManyField(Center)
+    """
+    this class stores the information of tutors, who are AUN students taking part in the tutoring
+    """
 
     CLASSIFICATION_CHOICES = (
         ('FR', 'Freshman'),
@@ -144,7 +162,7 @@ class Tutor(models.Model):
     tutor_id = models.CharField(max_length=9)
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
-    email = models.EmailField()
+    email = models.EmailField(max_length=225)
     major = models.CharField(max_length=300)
     classification = models.CharField(max_length=2, choices=CLASSIFICATION_CHOICES)
 
@@ -157,7 +175,6 @@ class LocalGovArea(models.Model):
     This model defines the database table for storing information about the Local Government Areas from which
     participants come
     """
-
     name = models.CharField(max_length=300)
 
     def __str__(self):
@@ -165,7 +182,22 @@ class LocalGovArea(models.Model):
 
 
 class Center(models.Model):
-    # venue = models.ForeignKey(Venue)
+    venue = models.ForeignKey(
+        Venue,
+        null=True,
+        on_delete=models.SET_NULL,
+    )
+
+    tutorial_types = models.ManyToManyField(
+        TutorialType
+    )
+
+    facilitator = models.ForeignKey(
+        Facilitator,
+        on_delete=models.SET_NULL,
+        null=True,
+    )
+
     title = models.CharField(max_length=50)
     group_size = models.IntegerField()
 
@@ -174,7 +206,7 @@ class Center(models.Model):
 
 
 class Facilitator(models.Model):
-    # center = models.ForeignKey(Center)
+
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
     phone = models.CharField(max_length=15)
@@ -186,7 +218,11 @@ class Facilitator(models.Model):
 
 
 class Assessment(models.Model):
-    # beneficiary = models.ForeignKey(Beneficiary, on_delete=models.CASCADE)
+    beneficiary = models.ForeignKey(
+        Beneficiary,
+        on_delete=models.SET_NULL,
+        null=True
+    )
     # enumerator = models.ForeignKey(Enumerator, on_delete=models.CASCADE)
 
     ASSESSMENT_TYPES = (
