@@ -16,12 +16,6 @@ class Beneficiary(models.Model):
         null=True,
     )
 
-    neighborhood = models.ForeignKey(
-        Neighborhood,
-        on_delete=models.SET_NULL,
-        null=True,
-    )
-
     GENDER = (
         ('M', 'Male'),
         ('F', 'Female')
@@ -62,18 +56,6 @@ class Venue(models.Model):
 
     def __str__(self):
         return "%s " % self.address
-
-
-class Neighborhood(models.Model):
-    """
-    This model holds information about the neighborhood from which
-    participants of the TELA project come from
-    """
-
-    name = models.CharField(max_length=200)
-
-    def __str__(self):
-        return self.name
 
 
 class Equipment(models.Model):
@@ -127,7 +109,6 @@ class Equipment(models.Model):
     def check_in(self):
         """
         this method checks in an equipment when its being returned
-        :param facilitator:
         :return:
         """
         if self.availability == self.AVAILABILITY_STATUS[0][0]:
@@ -176,6 +157,7 @@ class LocalGovArea(models.Model):
     participants come
     """
     name = models.CharField(max_length=300)
+    neighborhood = models.CharField(max_length=300)
 
     def __str__(self):
         return self.name
