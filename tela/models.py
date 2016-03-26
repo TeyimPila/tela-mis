@@ -207,7 +207,10 @@ class Facilitator(People):
 
 
 class Assessment(models.Model):
-    pass
+    # enter the attributes of assessment here
+
+    class Meta:
+        abstract = True
 
 
 class PreAssessment(Assessment):
