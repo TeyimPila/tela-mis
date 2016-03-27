@@ -77,7 +77,6 @@ class Neighborhood(models.Model):
 
 
 class Equipment(models.Model):
-
     # equipment are handed over to facilitators, who then take the equipment to their various venues
     facilitator = models.ForeignKey(
         Facilitator,
@@ -127,7 +126,6 @@ class Equipment(models.Model):
     def check_in(self):
         """
         this method checks in an equipment when its being returned
-        :param facilitator:
         :return:
         """
         if self.availability == self.AVAILABILITY_STATUS[0][0]:
@@ -206,7 +204,6 @@ class Center(models.Model):
 
 
 class Facilitator(models.Model):
-
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
     phone = models.CharField(max_length=15)
@@ -223,7 +220,12 @@ class Assessment(models.Model):
         on_delete=models.SET_NULL,
         null=True
     )
-    # enumerator = models.ForeignKey(Enumerator, on_delete=models.CASCADE)
+
+    enumerator = models.ForeignKey(
+        Enumerator,
+        on_delete=models.SET_NULL,
+        null=True,
+    )
 
     ASSESSMENT_TYPES = (
         ('Pre-Assessment', 'Pre-assessment'),
@@ -254,6 +256,10 @@ class TutorialType(models.Model):
 
 
 class Enumerator(models.Model):
+    """
+    Enumerators are individuals who carry out the pre and post assessment on beneficiaries and this model defines their
+    table
+    """
 
     first_name = models.CharField(max_length=30)
     last_name = models.CharField(max_length=30)
