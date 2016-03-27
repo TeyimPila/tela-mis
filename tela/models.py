@@ -2,7 +2,7 @@ from django.db import models
 from django.utils import timezone
 
 
-class People(models.Model):
+class Person(models.Model):
     GENDER = (
         ('male', 'Male'),
         ('female', 'Female')
@@ -23,7 +23,7 @@ class People(models.Model):
     full_name = property(__str__)
 
 
-class Beneficiary(People):
+class Beneficiary(Person):
     lga = models.ForeignKey(
         LocalGovArea,
         verbose_name="Local Government Area",
@@ -46,6 +46,10 @@ class Beneficiary(People):
     beneficiary_id = models.CharField(max_length=20)
     is_in_school = models.BooleanField(default=True, verbose_name='is in School?')
     age = models.IntegerField
+
+    # make Beneficiaries have "uneditable" phone number and email fields with a default value of "N/A"
+    phone_number = models.CharField(default="N/A", editable=False)
+    email = models.EmailField(default="N/A", editable=False)
 
     class Meta:
         verbose_name_plural = 'beneficiaries'
@@ -149,7 +153,7 @@ class Equipment(models.Model):
         unique_together = ('facilitator', 'serial_num')
 
 
-class Tutor(People):
+class Tutor(Person):
     """
     this class stores the information of tutors, who are AUN students taking part in the tutoring
     """
@@ -202,7 +206,7 @@ class Center(models.Model):
         return self.title
 
 
-class Facilitator(People):
+class Facilitator(Person):
     pass
 
 
@@ -240,5 +244,5 @@ class TutorialType(models.Model):
         return self.tutorial_type
 
 
-class Enumerator(People):
+class Enumerator(Person):
     pass
