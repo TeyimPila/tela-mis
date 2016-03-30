@@ -35,10 +35,9 @@ class Beneficiary(Person):
         null=True,
     )
 
-    neighborhood = models.ForeignKey(
-        Neighborhood,
-        on_delete=models.SET_NULL,
-        null=True,
+    GENDER = (
+        ('M', 'Male'),
+        ('F', 'Female')
     )
 
     beneficiary_id = models.CharField(max_length=20)
@@ -66,20 +65,7 @@ class Venue(models.Model):
         return "%s " % self.address
 
 
-class Neighborhood(models.Model):
-    """
-    This model holds information about the neighborhood from which
-    participants of the TELA project come from
-    """
-
-    name = models.CharField(max_length=200)
-
-    def __str__(self):
-        return self.name
-
-
 class Equipment(models.Model):
-
     # equipment are handed over to facilitators, who then take the equipment to their various venues
     facilitator = models.ForeignKey(
         Facilitator,
@@ -173,6 +159,7 @@ class LocalGovArea(models.Model):
     participants come
     """
     name = models.CharField(max_length=300)
+    neighborhood = models.CharField(max_length=300)
 
     def __str__(self):
         return self.name
