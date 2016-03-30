@@ -10,8 +10,6 @@ class Person(models.Model):
 
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
-    email = models.EmailField(blank=True, null=True)
-    phone_number = models.CharField(max_length=15, blank=True, null=True)
     gender = models.CharField(max_length=6, choices=GENDER)
 
     class Meta:
@@ -46,10 +44,6 @@ class Beneficiary(Person):
     beneficiary_id = models.CharField(max_length=20)
     is_in_school = models.BooleanField(default=True, verbose_name='is in School?')
     age = models.IntegerField
-
-    # make Beneficiaries have "uneditable" phone number and email fields with a default value of "N/A"
-    phone_number = models.CharField(default="N/A", editable=False)
-    email = models.EmailField(default="N/A", editable=False)
 
     class Meta:
         verbose_name_plural = 'beneficiaries'
@@ -169,6 +163,8 @@ class Tutor(Person):
     tutor_id = models.CharField(max_length=9)
     major = models.CharField(max_length=300)
     classification = models.CharField(max_length=2, choices=CLASSIFICATION_CHOICES)
+    email = models.EmailField(blank=True, null=True)
+    phone_number = models.CharField(max_length=15, blank=True, null=True)
 
 
 class LocalGovArea(models.Model):
@@ -207,7 +203,9 @@ class Center(models.Model):
 
 
 class Facilitator(Person):
-    pass
+    account_number = models.CharField(blank=True, null=True, max_length=12)
+    email = models.EmailField(blank=True, null=True)
+    phone_number = models.CharField(max_length=15, blank=True, null=True)
 
 
 class Assessment(models.Model):
@@ -245,4 +243,6 @@ class TutorialType(models.Model):
 
 
 class Enumerator(Person):
-    pass
+    account_number = models.CharField(blank=True, null=True, max_length=12)
+    email = models.EmailField(blank=True, null=True)
+    phone_number = models.CharField(max_length=15, blank=True, null=True)
