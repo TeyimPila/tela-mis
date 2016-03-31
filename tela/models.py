@@ -2,7 +2,26 @@ from django.db import models
 from django.utils import timezone
 
 
-class Beneficiary(models.Model):
+class Person(models.Model):
+    GENDER = (
+        ('male', 'Male'),
+        ('female', 'Female')
+    )
+
+    first_name = models.CharField(max_length=50)
+    last_name = models.CharField(max_length=50)
+    gender = models.CharField(max_length=6, choices=GENDER)
+
+    class Meta:
+        abstract = True
+
+    def __str__(self):
+        return '%s %s' % (self.first_name, self.last_name)
+
+    full_name = property(__str__)
+
+
+class Beneficiary(Person):
     lga = models.ForeignKey(
         LocalGovArea,
         verbose_name="Local Government Area",
@@ -22,20 +41,8 @@ class Beneficiary(models.Model):
     )
 
     beneficiary_id = models.CharField(max_length=20)
-    first_name = models.CharField(max_length=225)
-    last_name = models.CharField(max_length=225)
     is_in_school = models.BooleanField(default=True, verbose_name='is in School?')
-    gender = models.CharField(max_length=1, choices=GENDER)
-    year_of_birth = models.IntegerField('year of birth', default=timezone.now().year)
-
-    def _get_age(self):
-        year = timezone.now().year
-        return year - self.year_of_birth
-
-    beneficiary_age = property(_get_age)
-
-    def __str__(self):
-        return '%s %s' % (self.first_name, self.last_name)
+    age = models.IntegerField
 
     class Meta:
         verbose_name_plural = 'beneficiaries'
@@ -126,7 +133,7 @@ class Equipment(models.Model):
         unique_together = ('facilitator', 'serial_num')
 
 
-class Tutor(models.Model):
+class Tutor(Person):
     """
     this class stores the information of tutors, who are AUN students taking part in the tutoring
     """
@@ -140,14 +147,10 @@ class Tutor(models.Model):
     )
 
     tutor_id = models.CharField(max_length=9)
-    first_name = models.CharField(max_length=50)
-    last_name = models.CharField(max_length=50)
-    email = models.EmailField(max_length=225)
     major = models.CharField(max_length=300)
     classification = models.CharField(max_length=2, choices=CLASSIFICATION_CHOICES)
-
-    def __str__(self):
-        return "%s %s" % (self.first_name, self.last_name)
+    email = models.EmailField(blank=True, null=True)
+    phone_number = models.CharField(max_length=15, blank=True, null=True)
 
 
 class LocalGovArea(models.Model):
@@ -186,39 +189,27 @@ class Center(models.Model):
         return self.title
 
 
-class Facilitator(models.Model):
-    first_name = models.CharField(max_length=50)
-    last_name = models.CharField(max_length=50)
-    phone = models.CharField(max_length=15)
-    email = models.EmailField()
-    age = models.IntegerField()
-
-    def __str__(self):
-        return "%s %s" % (self.first_name, self.last_name)
+class Facilitator(Person):
+    account_number = models.CharField(blank=True, null=True, max_length=12)
+    email = models.EmailField(blank=True, null=True)
+    phone_number = models.CharField(max_length=15, blank=True, null=True)
 
 
 class Assessment(models.Model):
-    beneficiary = models.ForeignKey(
-        Beneficiary,
-        on_delete=models.SET_NULL,
-        null=True
-    )
+    # enter the attributes of assessment here
 
-    enumerator = models.ForeignKey(
-        Enumerator,
-        on_delete=models.SET_NULL,
-        null=True,
-    )
+    class Meta:
+        abstract = True
 
-    ASSESSMENT_TYPES = (
-        ('Pre-Assessment', 'Pre-assessment'),
-        ('Post-Assessment', 'Post-Assessment'),
-    )
 
-    type = models.CharField(max_length=16, choices=ASSESSMENT_TYPES)
+class PreAssessment(Assessment):
+    beneficiary = models.ForeignKey(Beneficiary, on_delete=models.SET_NULL, null=True)
+    enumerator = models.ForeignKey(Enumerator, on_delete=models.CASCADE)
 
-    def __str__(self):
-        return '%s\'s %s' % (self.beneficiary, self.type)
+
+class PostAssessment(Assessment):
+    beneficiary = models.ForeignKey(Beneficiary, on_delete=models.SET_NULL, null=True)
+    enumerator = models.ForeignKey(Enumerator, on_delete=models.CASCADE)
 
 
 class TutorialType(models.Model):
@@ -238,16 +229,7 @@ class TutorialType(models.Model):
         return self.tutorial_type
 
 
-class Enumerator(models.Model):
-    """
-    Enumerators are individuals who carry out the pre and post assessment on beneficiaries and this model defines their
-    table
-    """
-
-    first_name = models.CharField(max_length=30)
-    last_name = models.CharField(max_length=30)
-    phone_number = models.CharField(max_length=14)
-    email = models.EmailField()
-
-    def __str__(self):
-        return "%s %s" % (self.first_name, self.last_name)
+class Enumerator(Person):
+    account_number = models.CharField(blank=True, null=True, max_length=12)
+    email = models.EmailField(blank=True, null=True)
+    phone_number = models.CharField(max_length=15, blank=True, null=True)
