@@ -6,4 +6,9 @@ env
 __pycache__
 .coverage
 htmlcov
-secret*
+TelaMIS/secret
+/secret.py
+/TelaMIS/secret.py
+TelaMIS/secret.py
+
+
