@@ -20,10 +20,84 @@ class Person(models.Model):
 
     full_name = property(__str__)
 
+class LocalGovArea(models.Model):
+    """
+    This model defines the database table for storing information about the Local Government Areas from which
+    participants come
+    """
+    name = models.CharField(max_length=300)
+    neighborhood = models.CharField(max_length=300)
+
+    def __str__(self):
+        return self.name
+
+class Venue(models.Model):
+    """
+    This model defines the database table that will hold information about tutorial venues
+    """
+    address = models.CharField(max_length=300)
+    location_latitude = models.CharField('Latitude', max_length=20, null=True, blank=True)
+    location_longitude = models.CharField('longitude', max_length=20, null=True, blank=True)
+
+    def _get_coordinates(self):
+        return "(%s,%s)" % (self.location_latitude, self.location_longitude)
+
+    coordinate = property(_get_coordinates)
+
+    def __str__(self):
+        return "%s " % self.address
+
+
+class TutorialType(models.Model):
+    """
+    this model defines the type of tutorials that can possibly be carried out at any given center
+    this model has a many to many field in the center model
+    """
+    TUTORIAL_TYPES = (
+        ('Feed and Read', 'Feed and Read'),
+        ('After School Tutorial', 'After School Tutorial'),
+        ('Face to Face', 'Tutorial'),
+        ('Radio Tutorial', 'Radio Tutorial'),
+    )
+    tutorial_type = models.CharField(max_length=50, choices=TUTORIAL_TYPES)
+
+    def __str__(self):
+        return self.tutorial_type
+
+class Facilitator(Person):
+    account_number = models.CharField(blank=True, null=True, max_length=12)
+    email = models.EmailField(blank=True, null=True)
+    phone_number = models.CharField(max_length=15, blank=True, null=True)
+
+
+
+class Center(models.Model):
+    venue = models.ForeignKey(
+        Venue,
+        null=True,
+        on_delete=models.SET_NULL,
+    )
+
+    tutorial_types = models.ManyToManyField(
+        TutorialType
+    )
+
+    facilitator = models.ForeignKey(
+        Facilitator,
+        on_delete=models.SET_NULL,
+        null=True,
+    )
+
+    title = models.CharField(max_length=50)
+    group_size = models.IntegerField()
+
+    def __str__(self):
+        return self.title
+
 
 class Beneficiary(Person):
     lga = models.ForeignKey(
-        LocalGovArea,
+       LocalGovArea,
         verbose_name="Local Government Area",
         on_delete=models.SET_NULL,
         null=True
@@ -46,23 +120,6 @@ class Beneficiary(Person):
 
     class Meta:
         verbose_name_plural = 'beneficiaries'
-
-
-class Venue(models.Model):
-    """
-    This model defines the database table that will hold information about tutorial venues
-    """
-    address = models.CharField(max_length=300)
-    location_latitude = models.CharField('Latitude', max_length=20, null=True, blank=True)
-    location_longitude = models.CharField('longitude', max_length=20, null=True, blank=True)
-
-    def _get_coordinates(self):
-        return "(%s,%s)" % (self.location_latitude, self.location_longitude)
-
-    coordinate = property(_get_coordinates)
-
-    def __str__(self):
-        return "%s " % self.address
 
 
 class Equipment(models.Model):
@@ -153,53 +210,19 @@ class Tutor(Person):
     phone_number = models.CharField(max_length=15, blank=True, null=True)
 
 
-class LocalGovArea(models.Model):
-    """
-    This model defines the database table for storing information about the Local Government Areas from which
-    participants come
-    """
-    name = models.CharField(max_length=300)
-    neighborhood = models.CharField(max_length=300)
-
-    def __str__(self):
-        return self.name
-
-
-class Center(models.Model):
-    venue = models.ForeignKey(
-        Venue,
-        null=True,
-        on_delete=models.SET_NULL,
-    )
-
-    tutorial_types = models.ManyToManyField(
-        TutorialType
-    )
-
-    facilitator = models.ForeignKey(
-        Facilitator,
-        on_delete=models.SET_NULL,
-        null=True,
-    )
-
-    title = models.CharField(max_length=50)
-    group_size = models.IntegerField()
-
-    def __str__(self):
-        return self.title
-
-
-class Facilitator(Person):
-    account_number = models.CharField(blank=True, null=True, max_length=12)
-    email = models.EmailField(blank=True, null=True)
-    phone_number = models.CharField(max_length=15, blank=True, null=True)
-
 
 class Assessment(models.Model):
     # enter the attributes of assessment here
 
     class Meta:
         abstract = True
+
+
+class Enumerator(Person):
+    account_number = models.CharField(blank=True, null=True, max_length=12)
+    email = models.EmailField(blank=True, null=True)
+    phone_number = models.CharField(max_length=15, blank=True, null=True)
+
 
 
 class PreAssessment(Assessment):
@@ -212,24 +235,6 @@ class PostAssessment(Assessment):
     enumerator = models.ForeignKey(Enumerator, on_delete=models.CASCADE)
 
 
-class TutorialType(models.Model):
-    """
-    this model defines the type of tutorials that can possibly be carried out at any given center
-    this model has a many to many field in the center model
-    """
-    TUTORIAL_TYPES = (
-        ('Feed and Read', 'Feed and Read'),
-        ('After School Tutorial', 'After School Tutorial'),
-        ('Face to Face', 'Tutorial'),
-        ('Radio Tutorial', 'Radio Tutorial'),
-    )
-    tutorial_type = models.CharField(max_length=50, choices=TUTORIAL_TYPES)
-
-    def __str__(self):
-        return self.tutorial_type
 
 
-class Enumerator(Person):
-    account_number = models.CharField(blank=True, null=True, max_length=12)
-    email = models.EmailField(blank=True, null=True)
-    phone_number = models.CharField(max_length=15, blank=True, null=True)
+
