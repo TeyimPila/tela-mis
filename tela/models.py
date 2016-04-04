@@ -116,7 +116,7 @@ class Beneficiary(Person):
 
     beneficiary_id = models.CharField(max_length=20)
     is_in_school = models.BooleanField(default=True, verbose_name='is in School?')
-    age = models.IntegerField
+    age = models.IntegerField()
 
     class Meta:
         verbose_name_plural = 'beneficiaries'
