@@ -145,7 +145,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 # configuration settings for the django suit custom admin page app
 SUIT_CONFIG = {
     # header
-    'ADMIN_NAME': 'THE TELA MIS',
+    'ADMIN_NAME': 'TELA MIS',
     'HEADER_DATE_FORMAT': 'l, j. F Y',
     'HEADER_TIME_FORMAT': 'H:i',
 

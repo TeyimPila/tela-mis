@@ -14,47 +14,47 @@
 {% block breadcrumbs %}{% endblock %}
 
 {% block content %}
-    <div id="content-main" class="apps">
-        <div id="tela-app">
-            <a href="{{ '/admin/tela/' }}"><img alt="aun-tela icon" src="" ></a>
+{#    <div id="content-main" class="apps">#}
+{#        <div id="tela-app">#}
+{#            <a href="{{ '/admin/tela/' }}"><img alt="aun-tela icon" src="" ></a>#}
+{#        </div>#}
+{##}
+{#    </div>#}
+
+        <div id="content-main">
+            {% if app_list %}
+                {% for app in app_list %}
+                    <div class="module">
+                        <table class="table-overview applist"
+                               summary="{% blocktrans with name=app.name %}Models available in the {{ name }} application.{% endblocktrans %}">
+                            <caption><a href="{{ app.app_url }}" class="section">{% trans app.name %}</a></caption>
+                            {% for model in app.models %}
+                                <tr>
+                                    <th scope="row">{{ model.name }}</th>
+                                    {% if model.admin_url %}
+                                        <td>
+                                            <a href="{{ model.admin_url }}" class="changelink icon">{% trans 'Change' %}</a>
+                                        </td>
+                                    {% else %}
+                                        <td>&nbsp;</td>
+                                    {% endif %}
+
+                                    {% if model.add_url %}
+                                        <td><a href="{{ model.add_url }}" class="addlink icon"><i
+                                                class="icon-plus-sign icon-alpha75"></i>{% trans 'Add' %}
+                                        </a></td>
+                                    {% else %}
+                                        <td>&nbsp;</td>
+                                    {% endif %}
+                                </tr>
+                            {% endfor %}
+                        </table>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <p>{% trans "You don't have permission to edit anything." %}</p>
+            {% endif %}
         </div>
-
-    </div>
-
-    {#    <div id="content-main">#}
-    {#        {% if app_list %}#}
-    {#            {% for app in app_list %}#}
-    {#                <div class="module">#}
-    {#                    <table class="table-overview applist"#}
-    {#                           summary="{% blocktrans with name=app.name %}Models available in the {{ name }} application.{% endblocktrans %}">#}
-    {#                        <caption><a href="{{ app.app_url }}" class="section">{% trans app.name %}</a></caption>#}
-    {#                        {% for model in app.models %}#}
-    {#                            <tr>#}
-    {#                                <th scope="row">{{ model.name }}</th>#}
-    {#                                {% if model.admin_url %}#}
-    {#                                    <td>#}
-    {#                                        <a href="{{ model.admin_url }}" class="changelink icon">{% trans 'Change' %}</a>#}
-    {#                                    </td>#}
-    {#                                {% else %}#}
-    {#                                    <td>&nbsp;</td>#}
-    {#                                {% endif %}#}
-    {##}
-    {#                                {% if model.add_url %}#}
-    {#                                    <td><a href="{{ model.add_url }}" class="addlink icon"><i#}
-    {#                                            class="icon-plus-sign icon-alpha75"></i>{% trans 'Add' %}#}
-    {#                                    </a></td>#}
-    {#                                {% else %}#}
-    {#                                    <td>&nbsp;</td>#}
-    {#                                {% endif %}#}
-    {#                            </tr>#}
-    {#                        {% endfor %}#}
-    {#                    </table>#}
-    {#                </div>#}
-    {#            {% endfor %}#}
-    {#        {% else %}#}
-    {#            <p>{% trans "You don't have permission to edit anything." %}</p>#}
-    {#        {% endif %}#}
-    {#    </div>#}
 {% endblock %}
 
 
