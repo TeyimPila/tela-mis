@@ -45,11 +45,11 @@
 
 
 {# Footer links (left side) #}
-{#{% block footer_links %}#}
-{#    Copyright &copy; {% now "Y" %}, <a href="http://auntela.org" target="_blank">AUN TELA</a>#}
-{# link to project documentation #}
+{% block footer_links %}
+    Copyright &copy; {% now "Y" %}, <a href="http://auntela.org" target="_blank">AUN TELA</a>
+{# link to project documentation#}
 {#    <a href="#" class="icon"><i class="icon-question-sign"></i>Documentation</a>#}
-{#{% endblock %}#}
+{% endblock %}
 
 
 {##}
@@ -79,10 +79,10 @@
 {# Footer branding name (center) #}
 {#{% block footer_branding %}#}
 {#{% endblock %}#}
-{##}
-{##}
-{# Footer copyright (right side) #}
-{#{% block copyright %}#}
-{#    Developed by<a href="https://www.facebook.com/profile.php?id=100008737815542" target="_blank">Teyim Pila</a> and#}
-{#    <a href="https://www.facebook.com/muma.ticha" target="_blank">Muma Justice</a>#}
-{#{% endblock %}#}
+
+
+{# Footer copyright (right side)#}
+{% block copyright %}
+    Developed by<a href="https://www.facebook.com/profile.php?id=100008737815542" target="_blank">Teyim Pila</a> and
+    <a href="https://www.facebook.com/muma.ticha" target="_blank">Muma Justice</a>
+{% endblock %}
