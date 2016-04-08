@@ -20,16 +20,29 @@ class Person(models.Model):
 
     full_name = property(__str__)
 
+
 class LocalGovArea(models.Model):
     """
     This model defines the database table for storing information about the Local Government Areas from which
     participants come
     """
     name = models.CharField(max_length=300)
-    neighborhood = models.CharField(max_length=300)
 
     def __str__(self):
         return self.name
+
+
+class Neighborhood(models.Model):
+    name = models.CharField(max_length=300)
+    lga = models.ForeignKey(
+        LocalGovArea,
+        null=True,
+        on_delete=models.SET_NULL,
+    )
+
+    def __str__(self):
+        return self.name
+
 
 class Venue(models.Model):
     """
@@ -64,11 +77,11 @@ class TutorialType(models.Model):
     def __str__(self):
         return self.tutorial_type
 
+
 class Facilitator(Person):
     account_number = models.CharField(blank=True, null=True, max_length=12)
     email = models.EmailField(blank=True, null=True)
     phone_number = models.CharField(max_length=15, blank=True, null=True)
-
 
 
 class Center(models.Model):
@@ -89,7 +102,7 @@ class Center(models.Model):
     )
 
     title = models.CharField(max_length=50)
-    group_size = models.IntegerField()
+    group_size = models.PositiveIntegerField()
 
     def __str__(self):
         return self.title
@@ -97,7 +110,7 @@ class Center(models.Model):
 
 class Beneficiary(Person):
     lga = models.ForeignKey(
-       LocalGovArea,
+        LocalGovArea,
         verbose_name="Local Government Area",
         on_delete=models.SET_NULL,
         null=True
@@ -116,7 +129,7 @@ class Beneficiary(Person):
 
     beneficiary_id = models.CharField(max_length=20)
     is_in_school = models.BooleanField(default=True, verbose_name='is in School?')
-    age = models.IntegerField
+    age = models.PositiveIntegerField()
 
     class Meta:
         verbose_name_plural = 'beneficiaries'
@@ -210,7 +223,6 @@ class Tutor(Person):
     phone_number = models.CharField(max_length=15, blank=True, null=True)
 
 
-
 class Assessment(models.Model):
     # enter the attributes of assessment here
 
@@ -224,7 +236,6 @@ class Enumerator(Person):
     phone_number = models.CharField(max_length=15, blank=True, null=True)
 
 
-
 class PreAssessment(Assessment):
     beneficiary = models.ForeignKey(Beneficiary, on_delete=models.SET_NULL, null=True)
     enumerator = models.ForeignKey(Enumerator, on_delete=models.CASCADE)
@@ -233,8 +244,3 @@ class PreAssessment(Assessment):
 class PostAssessment(Assessment):
     beneficiary = models.ForeignKey(Beneficiary, on_delete=models.SET_NULL, null=True)
     enumerator = models.ForeignKey(Enumerator, on_delete=models.CASCADE)
-
-
-
-
-
