@@ -102,7 +102,7 @@ class Center(models.Model):
     )
 
     title = models.CharField(max_length=50)
-    group_size = models.IntegerField()
+    group_size = models.PositiveIntegerField()
 
     def __str__(self):
         return self.title
@@ -129,7 +129,7 @@ class Beneficiary(Person):
 
     beneficiary_id = models.CharField(max_length=20)
     is_in_school = models.BooleanField(default=True, verbose_name='is in School?')
-    age = models.IntegerField()
+    age = models.PositiveIntegerField()
 
     class Meta:
         verbose_name_plural = 'beneficiaries'
