@@ -147,7 +147,7 @@ SUIT_CONFIG = {
     # header
     'ADMIN_NAME': 'TELA MIS',
     'HEADER_DATE_FORMAT': 'l, j. F Y',
-    'HEADER_TIME_FORMAT': 'H:i',
+    'HEADER_TIME_FORMAT': 'h:i A',
 
     # forms
     'SHOW_REQUIRED_ASTERISK': True,  # Default True
@@ -184,5 +184,5 @@ SUIT_CONFIG = {
     ),
 
     # misc
-    'LIST_PER_PAGE': 20
+    'LIST_PER_PAGE': 10
 }
