@@ -36,6 +36,7 @@ class Neighborhood(models.Model):
     name = models.CharField(max_length=300)
     lga = models.ForeignKey(
         LocalGovArea,
+        verbose_name="Local Government Area",
         null=True,
         on_delete=models.SET_NULL,
     )
@@ -79,6 +80,12 @@ class TutorialType(models.Model):
 
 
 class Facilitator(Person):
+    neighborhood = models.ForeignKey(
+        Neighborhood,
+        null= True,
+        blank=True,
+        on_delete=models.SET_NULL
+    )
     account_number = models.CharField(blank=True, null=True, max_length=12)
     email = models.EmailField(blank=True, null=True)
     phone_number = models.CharField(max_length=15, blank=True, null=True)
@@ -109,9 +116,8 @@ class Center(models.Model):
 
 
 class Beneficiary(Person):
-    lga = models.ForeignKey(
-        LocalGovArea,
-        verbose_name="Local Government Area",
+    neighborhood = models.ForeignKey(
+        Neighborhood,
         on_delete=models.SET_NULL,
         null=True
     )
@@ -231,6 +237,12 @@ class Assessment(models.Model):
 
 
 class Enumerator(Person):
+    neighborhood = models.ForeignKey(
+        Neighborhood,
+        on_delete=models.SET_NULL,
+        null=True
+    )
+
     account_number = models.CharField(blank=True, null=True, max_length=12)
     email = models.EmailField(blank=True, null=True)
     phone_number = models.CharField(max_length=15, blank=True, null=True)
