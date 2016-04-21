@@ -1,7 +1,8 @@
 from django.contrib import admin
-from .models import *
-from .forms import BeneficiaryForm
 from django.core import urlresolvers
+
+from .forms import BeneficiaryForm
+from .models import *
 
 
 class LocalGovAreaAdmin(admin.ModelAdmin):
@@ -10,12 +11,14 @@ class LocalGovAreaAdmin(admin.ModelAdmin):
 
 
 class VenueAdmin(admin.ModelAdmin):
-    list_display = ('coordinate',)
+    list_display = ('address','coordinate',)
+    search_fields = ('address','coordinate',)
 
 
 class TutorialTypeAdmin(admin.ModelAdmin):
     list_display = ('tutorial_type',)
     search_fields = ('tutorial_type',)
+    list_filter = ('tutorial_type',)
 
 
 class FacilitatorAdmin(admin.ModelAdmin):
@@ -24,6 +27,7 @@ class FacilitatorAdmin(admin.ModelAdmin):
     search_fields = ('full_name', 'first_name', 'last_name', 'account_number', 'email', 'phone_number',)
     raw_id_fields = ('neighborhood',)
     ordering = ['email']
+    list_filter = ('gender',)
 
 
 class CenterAdmin(admin.ModelAdmin):
@@ -42,13 +46,13 @@ class BeneficiaryAdmin(admin.ModelAdmin):
     raw_id_fields = ('neighborhood', 'center',)
     ordering = ['first_name', 'last_name']
     search_fields = ('beneficiary_id', 'first_name', 'beneficiary_id',)
+    list_filter = ('is_in_school', 'gender', 'age')
 
     # this is a test function that lets django list neighborhoods in the beneficiary table as links to those
     # neighborhoods. This allows users to intanly click and view details of each neighborhood right from the
     # list of beneficiaries
 
-    @staticmethod
-    def link_to_neigh(obj):
+    def link_to_neigh(self, obj):
         link = urlresolvers.reverse("admin:tela_neighborhood_change", args=[obj.neighborhood.id])
         return u'<a href="%s">%s</a>' % (link, obj.neighborhood.name)
 
@@ -56,12 +60,11 @@ class BeneficiaryAdmin(admin.ModelAdmin):
 
 
 class EquipmentAdmin(admin.ModelAdmin):
-    list_display = ('serial_num', 'equipment_type', 'status', 'check_in_status', 'availability',)
-    fields = ['serial_num', 'equipment_type', 'facilitator', 'status', 'check_in_status',
-              'availability']
-    raw_id_fields = ('facilitator',)
-    search_fields = ('serial_num', 'equipment_type', 'availability',)
-    ordering = ['check_in_status', 'serial_num']
+    list_display = ('serial_num', 'equipment_type', 'status', 'created','updated', 'is_available',)
+    fields = ['serial_num', 'equipment_type', 'status', 'is_available']
+    search_fields = ('serial_num', 'equipment_type', 'is_available',)
+    ordering = ['status', 'serial_num']
+    list_filter = ('equipment_type', 'status', 'created', 'updated', 'is_available',)
 
 
 class EnumeratorAdmin(admin.ModelAdmin):
@@ -69,6 +72,7 @@ class EnumeratorAdmin(admin.ModelAdmin):
     fields = ['first_name', 'last_name', 'email', 'gender', 'neighborhood', 'account_number', 'phone_number']
     ordering = ['first_name', 'last_name']
     search_fields = ('first_name', 'last_name', 'email', 'phone_number',)
+    list_filter = ('gender',)
 
 
 class TutorAdmin(admin.ModelAdmin):
@@ -76,6 +80,7 @@ class TutorAdmin(admin.ModelAdmin):
     fields = ['tutor_id', 'first_name', 'last_name', 'gender', 'major', 'classification', 'email', 'phone_number']
     ordering = ['tutor_id', 'first_name', 'last_name', ]
     search_fields = ('tutor_id', 'first_name', 'last_name', 'email',)
+    list_filter = ('gender', 'classification',)
 
 
 class PreAssessmentAdmin(admin.ModelAdmin):
