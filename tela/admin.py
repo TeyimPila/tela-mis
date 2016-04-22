@@ -43,7 +43,7 @@ class CenterAdmin(ImportExportActionModelAdmin):
 
 class BeneficiaryAdmin(ImportExportActionModelAdmin):
     form = BeneficiaryForm
-    list_display = ('beneficiary_id', 'full_name', 'gender', 'is_in_school', 'age', 'link_to_neigh')
+    list_display = ('beneficiary_id', 'full_name', 'gender', 'center', 'is_in_school', 'age', 'comes_from')
     fields = ['beneficiary_id', 'first_name', 'last_name', 'gender', 'neighborhood', 'center', 'age', 'is_in_school']
     raw_id_fields = ('neighborhood', 'center',)
     ordering = ['first_name', 'last_name']
@@ -54,11 +54,11 @@ class BeneficiaryAdmin(ImportExportActionModelAdmin):
     # neighborhoods. This allows users to intanly click and view details of each neighborhood right from the
     # list of beneficiaries
 
-    def link_to_neigh(self, obj):
+    def comes_from(self, obj):
         link = urlresolvers.reverse("admin:tela_neighborhood_change", args=[obj.neighborhood.id])
         return u'<a href="%s">%s</a>' % (link, obj.neighborhood.name)
 
-    link_to_neigh.allow_tags = True
+    comes_from.allow_tags = True
 
 
 class EquipmentAdmin(ImportExportActionModelAdmin):
