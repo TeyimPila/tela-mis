@@ -1,10 +1,10 @@
 from django.contrib import admin
-from .models import Inventory
+from .models import Product
 from import_export.admin import ImportExportActionModelAdmin
 
 
 # Register your models here.
-class InventoryAdmin(ImportExportActionModelAdmin):
+class ProductAdmin(ImportExportActionModelAdmin):
     list_display = (
         'item', 'description', 'category', 'purchased', 'date_added', 'last_updated', 'ok', 'damaged', 'out', 'at_hand',
         'still_available',)
@@ -14,4 +14,4 @@ class InventoryAdmin(ImportExportActionModelAdmin):
     list_filter = ('category', 'date_added', 'last_updated', 'still_available')
 
 
-admin.site.register(Inventory, InventoryAdmin)
+admin.site.register(Product, ProductAdmin)

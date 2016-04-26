@@ -11,22 +11,24 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
-            name='Inventory',
+            name='Product',
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('item', models.CharField(unique=True, max_length=200)),
+                ('id', models.AutoField(auto_created=True, serialize=False, primary_key=True, verbose_name='ID')),
+                ('image', models.ImageField(blank=True, upload_to='products/%Y/%m/%d')),
+                ('item', models.CharField(max_length=200, unique=True)),
                 ('description', models.TextField()),
-                ('date_added', models.DateTimeField(auto_now_add=True)),
-                ('last_updated', models.DateTimeField(auto_now=True)),
-                ('category', models.CharField(choices=[('A', 'Very Important'), ('B', 'Fairly Important'), ('C', 'Important')], max_length=50)),
+                ('date_added', models.DateField(auto_now_add=True)),
+                ('last_updated', models.DateField(auto_now=True)),
+                ('category', models.CharField(max_length=50, choices=[('A', 'Very Important'), ('B', 'Fairly Important'), ('C', 'Important')])),
                 ('purchased', models.PositiveIntegerField(verbose_name='Quantity Purchased')),
+                ('damaged', models.PositiveIntegerField(null=True, editable=False)),
                 ('ok', models.PositiveIntegerField(null=True, editable=False, verbose_name='OK')),
                 ('out', models.PositiveIntegerField(null=True, editable=False)),
                 ('at_hand', models.PositiveIntegerField(null=True, editable=False)),
                 ('still_available', models.BooleanField(default=True)),
             ],
             options={
-                'verbose_name_plural': 'inventory',
+                'verbose_name_plural': 'products',
             },
         ),
     ]

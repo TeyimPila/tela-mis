@@ -46,7 +46,8 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'tela',
     'import_export',
-    'inventory'
+    'inventory',
+    'transactions'
 )
 
 MIDDLEWARE_CLASSES = (
