@@ -45,6 +45,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'tela',
+    'import_export',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -184,5 +185,5 @@ SUIT_CONFIG = {
     ),
 
     # misc
-    'LIST_PER_PAGE': 10
+    'LIST_PER_PAGE': 15
 }
