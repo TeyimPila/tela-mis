@@ -2,13 +2,14 @@ from django.db import models
 from inventory.models import Product
 from tela.models import Facilitator
 
+
 # Create your models here.
 
 class Checkout(models.Model):
     facilitator = models.ForeignKey(Facilitator)
     checkout_date = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
-    check_in_complete = models.BooleanField(default=False)
+    check_in_complete = models.BooleanField(default=False, editable=False)
 
     class Meta:
         ordering = ('-checkout_date',)

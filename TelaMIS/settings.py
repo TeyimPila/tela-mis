@@ -182,6 +182,8 @@ SUIT_CONFIG = {
                     'tutorialtype',
                     'venue',
                     )},
+        {'app': 'inventory', 'icon': 'icon-briefcase', 'models': ('product',)},
+        {'app': 'transactions', 'icon': 'icon-random', 'models': ('checkout', 'checkoutitem')},
         # {'label': 'Settings', 'icon':'icon-cog', 'models': ('auth.user', 'auth.group')},
         # {'label': 'Support', 'icon':'icon-question-sign', 'url': '/support/'},
     ),
