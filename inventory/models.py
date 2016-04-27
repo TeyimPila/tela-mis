@@ -1,5 +1,6 @@
+from django.core.urlresolvers import reverse
 from django.db import models
-from django.utils import timezone
+# from django.utils import timezone
 from tela.models import Facilitator
 
 
@@ -11,7 +12,7 @@ class Product(models.Model):
     )
     image = models.ImageField(upload_to='products/%Y/%m/%d',
                               blank=True)
-    item = models.CharField(max_length=200, unique=True)
+    name = models.CharField(max_length=200, unique=True)
     description = models.TextField()
     date_added = models.DateField(auto_now_add=True)
     last_updated = models.DateField(auto_now=True)
@@ -21,13 +22,13 @@ class Product(models.Model):
     ok = models.PositiveIntegerField('OK', editable=False, null=True)
     out = models.PositiveIntegerField(editable=False, null=True)
     at_hand = models.PositiveIntegerField(editable=False, null=True)
-    still_available = models.BooleanField(default=True)
+    available = models.BooleanField(default=True)
 
     class Meta:
-        verbose_name_plural = "products"
+        ordering = ('name',)
 
     def __str__(self):
-        return self.item
+        return self.name
 
     def save(self, *args, **kwargs):
         if not self.at_hand and not self.ok and not self.damaged and not self.out:
@@ -36,6 +37,10 @@ class Product(models.Model):
             self.damaged = 0
             self.out = 0
         super(Product, self).save(*args, **kwargs)
+
+    def get_absolute_url(self):
+        return reverse('inventory:product_detail',
+                       args=[self.id, ])
 
 # class Transaction(models.Model):
 #     item = models.ForeignKey(Inventory, on_delete=models.CASCADE)

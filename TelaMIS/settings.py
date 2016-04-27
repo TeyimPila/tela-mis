@@ -47,7 +47,8 @@ INSTALLED_APPS = (
     'tela',
     'import_export',
     'inventory',
-    'transactions'
+    'transactions',
+    'cart'
 )
 
 MIDDLEWARE_CLASSES = (
@@ -191,3 +192,7 @@ SUIT_CONFIG = {
     # misc
     'LIST_PER_PAGE': 15
 }
+
+# configuration for media content like images and videos
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
