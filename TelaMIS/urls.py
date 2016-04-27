@@ -22,6 +22,8 @@ urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
     url(r'^(?P<filename>(robots.txt)|(humans.txt))$',
         home_files, name='home-files'),
+    url(r'^tela/', include('tela.urls', namespace='tela')),
+    url(r'^', include('account.urls', namespace='account')),
 ]
 
 urlpatterns += i18n_patterns(
