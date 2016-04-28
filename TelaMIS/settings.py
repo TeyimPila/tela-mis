@@ -194,6 +194,6 @@ STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 LOGIN_REDIRECT_URL = reverse_lazy('account:dashboard')
 LOGIN_URL = reverse_lazy('account:login')
-LOGOUT_URL = reverse_lazy('account:logout')
+LOGOUT_URL = os.path.join(BASE_DIR, 'templates' 'base.html')
 MEDIA_URL = '/media/' #base url to serve media files uploaded by users
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
