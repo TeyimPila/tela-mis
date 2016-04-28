@@ -48,7 +48,8 @@ INSTALLED_APPS = (
     'import_export',
     'inventory',
     'transactions',
-    'cart'
+    'cart',
+    'genericadmin'
 )
 
 MIDDLEWARE_CLASSES = (
@@ -78,6 +79,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'django.template.context_processors.i18n',
+                'cart.context_processors.cart',
             ],
 
             'loaders': [
@@ -196,3 +198,6 @@ SUIT_CONFIG = {
 # configuration for media content like images and videos
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
+
+# this is the key used by sessions to add items to cart
+CART_SESSION_ID = 'cart'

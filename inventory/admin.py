@@ -8,7 +8,7 @@ class ProductAdmin(ImportExportActionModelAdmin):
     list_display = (
         'name', 'description', 'category', 'purchased', 'date_added', 'last_updated', 'ok', 'damaged', 'out', 'at_hand',
         'available',)
-    fields = ['name', 'description', 'category', 'purchased']
+    fields = ['name', 'image', 'description', 'category', 'purchased']
     search_fields = ('name', 'category', 'available')
     ordering = ['name', 'category']
     list_filter = ('category', 'date_added', 'last_updated', 'available')

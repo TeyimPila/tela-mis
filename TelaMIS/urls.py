@@ -29,6 +29,8 @@ urlpatterns = [
 urlpatterns += i18n_patterns(
     url(r'^$', home, name='home'),
     url(r'^admin/', include(admin.site.urls)),
+    url(r'^cart/', include('cart.urls', namespace='cart')),
+    url(r'^transactions/', include('transactions.urls', namespace='transactions')),
     url(r'^list/', include('inventory.urls', namespace='inventory')),
 )
 if settings.DEBUG:

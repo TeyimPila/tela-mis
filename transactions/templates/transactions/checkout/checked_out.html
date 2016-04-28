@@ -1,0 +1,11 @@
+{% extends "inventory/base.html" %}
+{% block title %}
+    Thank you
+{% endblock %}
+{% block content %}
+    <h1>Thank you</h1>
+    <p>Your checkout has been successfully completed. This is checkout number
+        <strong> {{ checkout.id }}</strong>.</p>
+    <br><br>
+    <a href="{% url "inventory:product_list" %}" class="button light">Checkout more items</a>
+{% endblock %}

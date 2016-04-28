@@ -1,6 +1,8 @@
 from django.core.urlresolvers import reverse
 from django.db import models
 # from django.utils import timezone
+from django.utils.safestring import mark_safe
+
 from tela.models import Facilitator
 
 
@@ -10,19 +12,26 @@ class Product(models.Model):
         ('B', 'Fairly Important'),
         ('C', 'Important')
     )
-    image = models.ImageField(upload_to='products/%Y/%m/%d',
+    image = models.ImageField("Image", upload_to='products/%Y/%m/%d',
                               blank=True)
     name = models.CharField(max_length=200, unique=True)
     description = models.TextField()
     date_added = models.DateField(auto_now_add=True)
     last_updated = models.DateField(auto_now=True)
     category = models.CharField(choices=CATEGORIES, max_length=50)
-    purchased = models.PositiveIntegerField('Quantity Purchased')
+    purchased = models.PositiveIntegerField('Purchased')
     damaged = models.PositiveIntegerField(editable=False, null=True)
     ok = models.PositiveIntegerField('OK', editable=False, null=True)
     out = models.PositiveIntegerField(editable=False, null=True)
     at_hand = models.PositiveIntegerField(editable=False, null=True)
     available = models.BooleanField(default=True)
+
+    # def thumb(self):
+    #     if self.image:
+    #         return mark_safe(u'<img src="%s" width=60 height=60 />' % (self.image.url,))
+    #     else:
+    #         return mark_safe(u'<img src="%s" width=60 height=60 />' % ("static/no_image.png",))
+
 
     class Meta:
         ordering = ('name',)
