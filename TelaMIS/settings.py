@@ -131,7 +131,7 @@ LOCALE_PATHS = (
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
 
-STATIC_URL = '/static/'
+
 
 # This is where django looks for static files.
 #
@@ -196,3 +196,4 @@ LOGIN_URL = reverse_lazy('account:login')
 # LOGOUT_URL = reverse_lazy('account:logout')
 MEDIA_URL = '/media/' #base url to serve media files uploaded by users
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
+
