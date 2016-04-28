@@ -14,7 +14,7 @@
                                  <th>Serial Number</th>
                                  <th>Type</th>
                                  <th>status</th>
-                                 <th>Created</th>
+                                 <!--<th>Created</th>-->
                                  <th>Updated</th>
                                  <th>Availability</th>
 
@@ -24,11 +24,11 @@
                              <tbody>
                              {% for eqp in eqps %}
                                <tr>
-                                 <td>{{eqps.serial_num}}</td>
-                                 <td>{{eqps.equipment_type}}</td>
-                                 <td>{{eqps.created}}</td>
-                                 <td>{{eqps.updated}}</td>
-                                 <td>{{eqps.is_available}}</td>
+                                 <td>{{eqp.serial_num}}</td>
+                                 <td>{{eqp.equipment_type}}</td>
+                                 <!--<td>{{eqp.created}}</td>-->
+                                 <td>{{eqp.updated}}</td>
+                                 <td>{{eqp.is_available}}</td>
                                </tr>
                             {% endfor %}
                            </tbody>

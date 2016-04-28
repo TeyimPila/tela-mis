@@ -23,7 +23,7 @@ urlpatterns = [
     url(r'^(?P<filename>(robots.txt)|(humans.txt))$',
         home_files, name='home-files'),
     url(r'^tela/', include('tela.urls', namespace='tela')),
-    url(r'^account/', include('account.urls', namespace='account')),
+    url(r'^', include('account.urls', namespace='account')),
 ]
 
 urlpatterns += i18n_patterns(

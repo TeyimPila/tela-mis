@@ -38,7 +38,6 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = (
-    'account',
     'suit',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -47,6 +46,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'tela',
+    'account',
     'import_export',
 )
 
@@ -67,7 +67,7 @@ ROOT_URLCONF = 'TelaMIS.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, "account", "templates"),os.path.join(BASE_DIR, "templates")],
+         'DIRS': [os.path.join(BASE_DIR, 'templates'),os.path.join(BASE_DIR,'account', 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -79,13 +79,13 @@ TEMPLATES = [
                 'django.template.context_processors.i18n',
             ],
 
-             #'loaders': [
-                 #insert your TEMPLATE_LOADERS here
-                 #'django.template.loaders.filesystem.Loader',
-                 #'django.template.loaders.app_directories.Loader',
-                #'admin_tools.template_loaders.Loader',
-
-             #],
+             # 'loaders': [
+             #     #insert your TEMPLATE_LOADERS here
+             #     'django.template.loaders.filesystem.Loader',
+             #     'django.template.loaders.app_directories.Loader',
+             #    #'admin_tools.template_loaders.Loader',
+             #
+             # ],
           },
      },
 ]
@@ -131,10 +131,10 @@ LOCALE_PATHS = (
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
 
-
+STATIC_URL = '/static/'
 
 # This is where django looks for static files.
-# 
+#
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, "static"),
 )
@@ -143,8 +143,7 @@ STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
 )
 
-
-
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 # configuration settings for the django suit custom admin page app
 SUIT_CONFIG = {
     # header
@@ -190,10 +189,10 @@ SUIT_CONFIG = {
     'LIST_PER_PAGE': 15
 }
 
-STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
+
 LOGIN_REDIRECT_URL = reverse_lazy('account:dashboard')
 LOGIN_URL = reverse_lazy('account:login')
-LOGOUT_URL = os.path.join(BASE_DIR, 'templates' 'base.html')
+# LOGOUT_URL = reverse_lazy('account:logout')
 MEDIA_URL = '/media/' #base url to serve media files uploaded by users
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')

@@ -49,10 +49,10 @@ def lga_list(request):
            {'lgas':lgas});
 
 @login_required
-# def neighborhood_list(request):
-#     neighs = Neighborhood.objects.all()
-#     return render(request, 'account/neigh_list.html',
-#            {'neighs':neighs});
+def neighborhood_list(request):
+    neighs = Neighborhood.objects.all()
+    return render(request, 'account/neigh_list.html',
+           {'neighs':neighs});
 
 @login_required
 def venue_list(request):
