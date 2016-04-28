@@ -37,7 +37,18 @@
                             {% endfor %}
                            </tbody>
                          </table>
-                        <a href="#menu-toggle" class="btn btn-default" id="menu-toggle">Toggle Menu</a>
+                        <a href="#menu-toggle" class="btn btn-default" id="menu-toggle">Toggle Menu</a><br/><br/>
+                        <div class="jumbotron">
+                             <h3>Tutors Summary</h3>
+                             <ul style="list-style: none">
+                                 <li>Number of Tutors: {{num_of_tutors}}</li>
+                                 <li>Freshmen : {{freshmen}}</li>
+                                 <li>Sophomores: {{sophmores}}</li>
+                                 <li>Juniors: {{juniors}}</li>
+                                 <li>Seniors: {{seniors}}</li>
+                                 <li>Graduates: {{graduates}}</li>
+                             </ul>
+                         </div>
                     </div>
                 </div>
             </div>

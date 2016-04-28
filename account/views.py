@@ -14,16 +14,34 @@ def dashboard(request):
 # Create your views here.
 @login_required
 def beneficiary_list(request):
-    ben = Beneficiary.objects.all();
+    bens = Beneficiary.objects.all();
+    number_of_beneficiaries = bens.count()
+    number_in_school = Beneficiary.objects.filter(is_in_school='True').count()
+    number_out_of_school = number_of_beneficiaries - number_in_school
+    ordered = Beneficiary.objects.order_by('age')
+    youngest_beneficiary = ordered[0]
+    oldest_beneficiary = ordered[number_of_beneficiaries-1]
     return render(request,
                   'account/beneficiary_list.html',
-                   {'ben':ben,});
+                   {'bens':bens,'number_in_school': number_in_school,
+                    'number_of_beneficiaries': number_of_beneficiaries,
+                   'number_out_of_school': number_out_of_school,
+                   'youngest_beneficiary': youngest_beneficiary,
+                   'oldest_beneficiary': oldest_beneficiary,});
 
 @login_required
 def tutor_list(request):
     tuts = Tutor.objects.all()
+    num_of_tutors = tuts.count()
+    freshmen = Tutor.objects.filter(classification='FR').count()
+    sophmores = Tutor.objects.filter(classification='SO').count()
+    juniors = Tutor.objects.filter(classification='JR').count()
+    seniors = Tutor.objects.filter(classification='SR').count()
+    graduates = Tutor.objects.filter(classification='GR').count()
     return render(request, 'account/tutor_list.html',
-           {'tuts':tuts,});
+           {'tuts':tuts, 'num_of_tutors': num_of_tutors, 'freshmen': freshmen,
+            'sophmores': sophmores, 'juniors': juniors, 'seniors': seniors,
+            'graduates': graduates,});
 
 @login_required
 def facilitator_list(request):
