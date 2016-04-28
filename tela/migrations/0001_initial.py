@@ -14,7 +14,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Beneficiary',
             fields=[
-                ('id', models.AutoField(primary_key=True, verbose_name='ID', auto_created=True, serialize=False)),
+                ('id', models.AutoField(serialize=False, primary_key=True, auto_created=True, verbose_name='ID')),
                 ('first_name', models.CharField(max_length=50)),
                 ('last_name', models.CharField(max_length=50)),
                 ('gender', models.CharField(choices=[('male', 'Male'), ('female', 'Female')], max_length=6)),
@@ -29,7 +29,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Center',
             fields=[
-                ('id', models.AutoField(primary_key=True, verbose_name='ID', auto_created=True, serialize=False)),
+                ('id', models.AutoField(serialize=False, primary_key=True, auto_created=True, verbose_name='ID')),
                 ('title', models.CharField(max_length=50)),
                 ('group_size', models.PositiveIntegerField()),
             ],
@@ -37,7 +37,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Enumerator',
             fields=[
-                ('id', models.AutoField(primary_key=True, verbose_name='ID', auto_created=True, serialize=False)),
+                ('id', models.AutoField(serialize=False, primary_key=True, auto_created=True, verbose_name='ID')),
                 ('first_name', models.CharField(max_length=50)),
                 ('last_name', models.CharField(max_length=50)),
                 ('gender', models.CharField(choices=[('male', 'Male'), ('female', 'Female')], max_length=6)),
@@ -52,14 +52,13 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Equipment',
             fields=[
-                ('id', models.AutoField(primary_key=True, verbose_name='ID', auto_created=True, serialize=False)),
-                ('serial_num', models.CharField(unique=True, max_length=20)),
+                ('id', models.AutoField(serialize=False, primary_key=True, auto_created=True, verbose_name='ID')),
+                ('serial_num', models.CharField(max_length=20, unique=True)),
                 ('equipment_type', models.CharField(choices=[('Radio', 'Radio'), ('Tablet', 'Tablet'), ('Mat', 'Mat'), ('Workbook', 'Workbook')], max_length=15)),
-                ('status', models.CharField(choices=[('OK', 'OK'), ('Missing', 'Missing'), ('Damaged', 'Damaged')], default='OK', max_length=7)),
-                ('check_in_status', models.CharField(choices=[('OK', 'OK'), ('Missing', 'Missing'), ('Damaged', 'Damaged')], blank=True, default='OK', max_length=7, null=True)),
-                ('check_out_date', models.DateTimeField(blank=True, null=True)),
-                ('check_in_date', models.DateTimeField(blank=True, null=True)),
-                ('availability', models.CharField(choices=[('Available', 'Available'), ('Checked out', 'Checked Out')], max_length=12)),
+                ('status', models.CharField(choices=[('OK', 'OK'), ('Missing', 'Missing'), ('Damaged', 'Damaged')], max_length=7, default='OK')),
+                ('created', models.DateTimeField(auto_now_add=True)),
+                ('updated', models.DateTimeField(auto_now=True)),
+                ('is_available', models.BooleanField(default=True)),
             ],
             options={
                 'verbose_name_plural': 'equipment',
@@ -68,7 +67,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Facilitator',
             fields=[
-                ('id', models.AutoField(primary_key=True, verbose_name='ID', auto_created=True, serialize=False)),
+                ('id', models.AutoField(serialize=False, primary_key=True, auto_created=True, verbose_name='ID')),
                 ('first_name', models.CharField(max_length=50)),
                 ('last_name', models.CharField(max_length=50)),
                 ('gender', models.CharField(choices=[('male', 'Male'), ('female', 'Female')], max_length=6)),
@@ -83,23 +82,23 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='LocalGovArea',
             fields=[
-                ('id', models.AutoField(primary_key=True, verbose_name='ID', auto_created=True, serialize=False)),
+                ('id', models.AutoField(serialize=False, primary_key=True, auto_created=True, verbose_name='ID')),
                 ('name', models.CharField(max_length=300)),
             ],
         ),
         migrations.CreateModel(
             name='Neighborhood',
             fields=[
-                ('id', models.AutoField(primary_key=True, verbose_name='ID', auto_created=True, serialize=False)),
+                ('id', models.AutoField(serialize=False, primary_key=True, auto_created=True, verbose_name='ID')),
                 ('name', models.CharField(max_length=300)),
-                ('lga', models.ForeignKey(to='tela.LocalGovArea', on_delete=django.db.models.deletion.SET_NULL, null=True)),
+                ('lga', models.ForeignKey(verbose_name='Local Government Area', on_delete=django.db.models.deletion.SET_NULL, to='tela.LocalGovArea', null=True)),
             ],
         ),
         migrations.CreateModel(
             name='PostAssessment',
             fields=[
-                ('id', models.AutoField(primary_key=True, verbose_name='ID', auto_created=True, serialize=False)),
-                ('beneficiary', models.ForeignKey(to='tela.Beneficiary', on_delete=django.db.models.deletion.SET_NULL, null=True)),
+                ('id', models.AutoField(serialize=False, primary_key=True, auto_created=True, verbose_name='ID')),
+                ('beneficiary', models.ForeignKey(on_delete=django.db.models.deletion.SET_NULL, to='tela.Beneficiary', null=True)),
                 ('enumerator', models.ForeignKey(to='tela.Enumerator')),
             ],
             options={
@@ -109,8 +108,8 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='PreAssessment',
             fields=[
-                ('id', models.AutoField(primary_key=True, verbose_name='ID', auto_created=True, serialize=False)),
-                ('beneficiary', models.ForeignKey(to='tela.Beneficiary', on_delete=django.db.models.deletion.SET_NULL, null=True)),
+                ('id', models.AutoField(serialize=False, primary_key=True, auto_created=True, verbose_name='ID')),
+                ('beneficiary', models.ForeignKey(on_delete=django.db.models.deletion.SET_NULL, to='tela.Beneficiary', null=True)),
                 ('enumerator', models.ForeignKey(to='tela.Enumerator')),
             ],
             options={
@@ -120,7 +119,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Tutor',
             fields=[
-                ('id', models.AutoField(primary_key=True, verbose_name='ID', auto_created=True, serialize=False)),
+                ('id', models.AutoField(serialize=False, primary_key=True, auto_created=True, verbose_name='ID')),
                 ('first_name', models.CharField(max_length=50)),
                 ('last_name', models.CharField(max_length=50)),
                 ('gender', models.CharField(choices=[('male', 'Male'), ('female', 'Female')], max_length=6)),
@@ -137,28 +136,33 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='TutorialType',
             fields=[
-                ('id', models.AutoField(primary_key=True, verbose_name='ID', auto_created=True, serialize=False)),
+                ('id', models.AutoField(serialize=False, primary_key=True, auto_created=True, verbose_name='ID')),
                 ('tutorial_type', models.CharField(choices=[('Feed and Read', 'Feed and Read'), ('After School Tutorial', 'After School Tutorial'), ('Face to Face', 'Tutorial'), ('Radio Tutorial', 'Radio Tutorial')], max_length=50)),
             ],
         ),
         migrations.CreateModel(
             name='Venue',
             fields=[
-                ('id', models.AutoField(primary_key=True, verbose_name='ID', auto_created=True, serialize=False)),
+                ('id', models.AutoField(serialize=False, primary_key=True, auto_created=True, verbose_name='ID')),
                 ('address', models.CharField(max_length=300)),
-                ('location_latitude', models.CharField(verbose_name='Latitude', blank=True, max_length=20, null=True)),
-                ('location_longitude', models.CharField(verbose_name='longitude', blank=True, max_length=20, null=True)),
+                ('location_latitude', models.FloatField(verbose_name='Latitude', blank=True, max_length=20, null=True)),
+                ('location_longitude', models.FloatField(verbose_name='Longitude', blank=True, max_length=20, null=True)),
             ],
         ),
         migrations.AddField(
-            model_name='equipment',
-            name='facilitator',
-            field=models.ForeignKey(to='tela.Facilitator', null=True, blank=True, on_delete=django.db.models.deletion.SET_NULL),
+            model_name='facilitator',
+            name='neighborhood',
+            field=models.ForeignKey(on_delete=django.db.models.deletion.SET_NULL, blank=True, to='tela.Neighborhood', null=True),
+        ),
+        migrations.AddField(
+            model_name='enumerator',
+            name='neighborhood',
+            field=models.ForeignKey(on_delete=django.db.models.deletion.SET_NULL, to='tela.Neighborhood', null=True),
         ),
         migrations.AddField(
             model_name='center',
             name='facilitator',
-            field=models.ForeignKey(to='tela.Facilitator', on_delete=django.db.models.deletion.SET_NULL, null=True),
+            field=models.ForeignKey(on_delete=django.db.models.deletion.SET_NULL, to='tela.Facilitator', null=True),
         ),
         migrations.AddField(
             model_name='center',
@@ -168,20 +172,16 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='center',
             name='venue',
-            field=models.ForeignKey(to='tela.Venue', on_delete=django.db.models.deletion.SET_NULL, null=True),
+            field=models.ForeignKey(on_delete=django.db.models.deletion.SET_NULL, to='tela.Venue', null=True),
         ),
         migrations.AddField(
             model_name='beneficiary',
             name='center',
-            field=models.ForeignKey(to='tela.Center', on_delete=django.db.models.deletion.SET_NULL, null=True),
+            field=models.ForeignKey(on_delete=django.db.models.deletion.SET_NULL, to='tela.Center', null=True),
         ),
         migrations.AddField(
             model_name='beneficiary',
-            name='lga',
-            field=models.ForeignKey(to='tela.LocalGovArea', verbose_name='Local Government Area', null=True, on_delete=django.db.models.deletion.SET_NULL),
-        ),
-        migrations.AlterUniqueTogether(
-            name='equipment',
-            unique_together=set([('facilitator', 'serial_num')]),
+            name='neighborhood',
+            field=models.ForeignKey(on_delete=django.db.models.deletion.SET_NULL, to='tela.Neighborhood', null=True),
         ),
     ]
