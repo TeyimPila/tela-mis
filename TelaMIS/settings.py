@@ -67,7 +67,7 @@ ROOT_URLCONF = 'TelaMIS.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-         'DIRS': [os.path.join(BASE_DIR, 'templates'),os.path.join(BASE_DIR,'account', 'templates')],
+         'DIRS': [os.path.join(BASE_DIR,'account', 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -135,6 +135,7 @@ LOCALE_PATHS = (
 
 # This is where django looks for static files.
 #
+STATIC_URL = '/static/'
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, "static"),
 )

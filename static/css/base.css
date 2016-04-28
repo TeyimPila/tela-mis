@@ -36,3 +36,10 @@ li a:hover{
     background-color: #111111;
 }
 
+.user{
+    display: block;
+    color: white;
+    padding: 14px 36px;
+    text-align: center;
+}
+
