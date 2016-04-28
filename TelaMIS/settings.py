@@ -67,8 +67,8 @@ ROOT_URLCONF = 'TelaMIS.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-         'DIRS': [os.path.join(BASE_DIR,'account', 'templates')],
-        'APP_DIRS': True,
+        'DIRS': [os.path.join(BASE_DIR, 'account' 'templates')],
+        # 'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
                 'django.core.context_processors.request',
@@ -79,15 +79,15 @@ TEMPLATES = [
                 'django.template.context_processors.i18n',
             ],
 
-             # 'loaders': [
-             #     #insert your TEMPLATE_LOADERS here
-             #     'django.template.loaders.filesystem.Loader',
-             #     'django.template.loaders.app_directories.Loader',
-             #    #'admin_tools.template_loaders.Loader',
-             #
-             # ],
-          },
-     },
+            'loaders': [
+                # insert your TEMPLATE_LOADERS here
+                'django.template.loaders.filesystem.Loader',
+                'django.template.loaders.app_directories.Loader',
+                # 'admin_tools.template_loaders.Loader',
+
+            ],
+        },
+    },
 ]
 
 WSGI_APPLICATION = 'TelaMIS.wsgi.application'
@@ -131,11 +131,10 @@ LOCALE_PATHS = (
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
 
-
+STATIC_URL = '/static/'
 
 # This is where django looks for static files.
 #
-STATIC_URL = '/static/'
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, "static"),
 )
@@ -145,6 +144,7 @@ STATICFILES_FINDERS = (
 )
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
 # configuration settings for the django suit custom admin page app
 SUIT_CONFIG = {
     # header
@@ -191,10 +191,8 @@ SUIT_CONFIG = {
 }
 
 
-
 LOGIN_REDIRECT_URL = reverse_lazy('account:dashboard')
 LOGIN_URL = reverse_lazy('account:login')
 # LOGOUT_URL = reverse_lazy('account:logout')
 MEDIA_URL = '/media/' #base url to serve media files uploaded by users
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
-
