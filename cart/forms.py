@@ -10,7 +10,7 @@ STATUS = (
 
 class CartAddProductForm(forms.Form):
     quantity = forms.IntegerField(required=True, min_value=1, initial=1)
-    status = forms.ChoiceField(choices=STATUS,)
+    status = forms.ChoiceField(choices=STATUS, )
     update = forms.BooleanField(required=False,
                                 initial=False,
                                 widget=forms.HiddenInput)

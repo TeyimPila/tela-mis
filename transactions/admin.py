@@ -1,6 +1,4 @@
 from django.contrib import admin
-
-from trash.forms import CheckoutForm
 from .models import Checkout, CheckoutItem
 from genericadmin.admin import GenericAdminModelAdmin
 

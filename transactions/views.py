@@ -1,8 +1,6 @@
 from django.shortcuts import render
-from django.shortcuts import render
 from .models import CheckoutItem
 from .forms import CheckoutCreateForm
-# from .tasks import order_created
 from cart.cart import Cart
 
 

@@ -20,7 +20,8 @@ class Checkout(models.Model):
 
     # content_type = models.ForeignKey(ContentType)
     content_type = models.ForeignKey(ContentType,
-                                     limit_choices_to={"model__in": ('Facilitator', 'Enumerator', 'Tutor')}, verbose_name="Collected by")
+                                     limit_choices_to={"model__in": ('Facilitator', 'Enumerator', 'Tutor')},
+                                     verbose_name="Collected by")
     object_id = models.PositiveIntegerField(verbose_name='Individual')
     content_object = GenericForeignKey('content_type', 'object_id')
 

@@ -1,8 +1,5 @@
 from django.core.urlresolvers import reverse
 from django.db import models
-# from django.utils import timezone
-from django.utils.safestring import mark_safe
-
 from tela.models import Facilitator
 
 
@@ -26,13 +23,6 @@ class Product(models.Model):
     at_hand = models.PositiveIntegerField(editable=False, null=True)
     available = models.BooleanField(default=True)
 
-    # def thumb(self):
-    #     if self.image:
-    #         return mark_safe(u'<img src="%s" width=60 height=60 />' % (self.image.url,))
-    #     else:
-    #         return mark_safe(u'<img src="%s" width=60 height=60 />' % ("static/no_image.png",))
-
-
     class Meta:
         ordering = ('name',)
 
@@ -50,10 +40,3 @@ class Product(models.Model):
     def get_absolute_url(self):
         return reverse('inventory:product_detail',
                        args=[self.id, ])
-
-# class Transaction(models.Model):
-#     item = models.ForeignKey(Inventory, on_delete=models.CASCADE)
-#     description = models.TextField()
-#     checkout_date = models.DateField(default=timezone.now)
-#     to = models.ForeignKey(Facilitator, on_delete=models.CASCADE)
-#     quantity = models.PositiveIntegerField
