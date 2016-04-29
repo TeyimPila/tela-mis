@@ -84,18 +84,22 @@ def lga_list(request):
 @login_required
 def neighborhood_list(request):
     neighs = Neighborhood.objects.all()
+    neighborhoods_number = neighs.count()
     return render(request, 'account/neigh_list.html',
-           {'neighs':neighs});
+           {'neighs':neighs,
+            'neighborhoods_number': neighborhoods_number, });
 
 @login_required
 def venue_list(request):
     vens = Venue.objects.all()
+    venues_number = vens.count()
     return render(request, 'account/venue_list.html',
-           {'vens':vens});
+           {'vens':vens, 'venues_number': venues_number, });
 
 @login_required
 def tutorialType_list(request):
     tut_types = TutorialType.objects.all()
+    tutorial_type_number = tut_types.count()
     return render(request, 'account/tutType_list.html',
            {'tut_types':tut_types});
 
@@ -112,3 +116,11 @@ def beneficiary_detail(request, id):
     return render(request,
                   'account/beneficiary_detail.html',
                   {'ben':ben});
+
+#add pagination
+# def entry_index(request, template='account/beneficiary_list.html'):
+#     context = {
+#         'number_of_beneficiaries': Beneficiary.objects.all(),
+#     }
+#     return render_to_response(
+#         template, context, context_instance=RequestContext(request))
