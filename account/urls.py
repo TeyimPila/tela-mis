@@ -17,4 +17,5 @@ urlpatterns = [
     url(r'^venues/$', views.venue_list, name="venue_list"),
     url(r'^Tutorial_types/$', views.tutorialType_list, name="tutorialType_list"),
     url(r'^Equipments/$', views.equipment_list, name="equipment_list"),
+    url(r'^index/$', views.index, name="index"),
 ]

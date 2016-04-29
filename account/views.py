@@ -117,6 +117,12 @@ def beneficiary_detail(request, id):
                   'account/beneficiary_detail.html',
                   {'ben':ben});
 
+def index(request):
+    return render(request,
+                  'account/index.html',{
+
+                  } )
+
 #add pagination
 # def entry_index(request, template='account/beneficiary_list.html'):
 #     context = {
