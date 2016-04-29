@@ -46,40 +46,25 @@ def tutor_list(request):
 @login_required
 def facilitator_list(request):
     facs = Facilitator.objects.all()
-    number_of_facilitators = facs.count()
-    males = Facilitator.objects.filter(gender='male').count()
-    females = Facilitator.objects.filter(gender='female').count()
     return render(request, 'account/facilitator_list.html',
-           {'facs':facs, 'number_of_facilitators': number_of_facilitators,
-            'males': males, 'females': females,});
+           {'facs':facs});
 @login_required
 def enumerator_list(request):
     ens = Enumerator.objects.all()
-    number_of_enumerators = ens.count()
-    males = Enumerator.objects.filter(gender='male').count()
-    females = Enumerator.objects.filter(gender='female').count()
     return render(request, 'account/enumerator_list.html',
-           {'ens':ens, 'number_of_enumerators': number_of_enumerators, 'males': males,
-            'females': females});
+           {'ens':ens});
 
 @login_required
 def center_list(request):
     cens = Center.objects.all()
-    number_of_centers = cens.count()
-    ordered_centers = Center.objects.order_by('-group_size')
-    biggest_center = ordered_centers[0]
-    smallest_center = ordered_centers[number_of_centers-1]
-    max_size = biggest_center.group_size
     return render(request, 'account/center_list.html',
-           {'cens':cens, 'number_of_centers': number_of_centers, 'max_size': max_size,
-            'biggest_center': biggest_center, 'smallest_center': smallest_center});
+           {'cens':cens});
 
 @login_required
 def lga_list(request):
     lgas = LocalGovArea.objects.all()
-    lga_number = lgas.count()
     return render(request, 'account/lga_list.html',
-           {'lgas':lgas, 'lga_number': lga_number});
+           {'lgas':lgas});
 
 @login_required
 def neighborhood_list(request):

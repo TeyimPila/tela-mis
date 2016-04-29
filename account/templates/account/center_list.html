@@ -26,21 +26,12 @@
                                  <td>{{cen.venue}}</td>
                                  <td>{{cen.facilitator}}</td>
                                  <td>{{cen.group_size}}</td>
-                                 <td>{{cen.tutorial_type}}</td>
+                                 <td>{{cen.tutorial_types}}</td>
                                </tr>
                             {% endfor %}
                            </tbody>
                          </table>
-                        <a href="#menu-toggle" class="btn btn-default" id="menu-toggle">Toggle Menu</a><br/><br/>
-                        <div class="jumbotron">
-                             <h3>Center Summary</h3>
-                             <ul style="list-style: none">
-                                 <li>Centers: {{number_of_centers}}</li>
-                                 <li>Max Size : {{max_size}}</li>
-                                 <li>Biggest Center: {{biggest_center}}, Size: {{biggest_center.group_size}}</li>
-                                 <li>Smallest Center: {{smallest_center}}, Size: {{smallest_center.group_size}}</li>
-                             </ul>
-                         </div>
+                        <a href="#menu-toggle" class="btn btn-default" id="menu-toggle">Toggle Menu</a>
                     </div>
                 </div>
             </div>
