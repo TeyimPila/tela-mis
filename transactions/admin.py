@@ -11,15 +11,14 @@ class CheckoutItemInline(admin.TabularInline):
 
 
 class CheckoutAdmin(GenericAdminModelAdmin):
-    list_display = ['id', 'content_type', 'object_id', 'checkout_date', 'updated', 'check_in_complete']
-    list_filter = ['content_type', 'checkout_date', 'updated', 'check_in_complete']
-    search_fields = ['content_type', ]
+    list_display = ['id',  'content_type', 'name', 'checkout_date', 'updated', 'check_in_complete']
+    list_filter = ['content_type', 'name', 'checkout_date', 'updated', 'check_in_complete']
     # raw_id_fields = ['object_id', ]
     inlines = [CheckoutItemInline]
 
 
 class CheckoutItemAdmin(admin.ModelAdmin):
-    list_display = ['id', 'product', 'status', 'quantity']
+    list_display = ['id', 'status', 'quantity']
     # fields = []
 
 

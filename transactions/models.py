@@ -3,6 +3,7 @@ from django.contrib.contenttypes.models import ContentType
 from django.db import models
 from inventory.models import Product
 from tela.models import Facilitator
+from django import  forms
 
 
 # Create your models here.
@@ -24,9 +25,11 @@ class Checkout(models.Model):
                                      verbose_name="Collected by")
     object_id = models.PositiveIntegerField(verbose_name='Individual')
     content_object = GenericForeignKey('content_type', 'object_id')
+    name = models.CharField(max_length=300, editable=False, null=True)
 
-    # name = property(content_object.__str__())
-    # contenttype_obj = ContentType.objects.get_for_model()
+    def save(self, *args, **kwargs):
+        self.name = self.content_object.full_name
+        super(Checkout, self).save(*args, **kwargs)
 
 
 class CheckoutItem(models.Model):

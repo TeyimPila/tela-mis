@@ -35,6 +35,8 @@ class Product(models.Model):
             self.ok = self.purchased
             self.damaged = 0
             self.out = 0
+        if self.purchased==0:
+            self.available=False
         super(Product, self).save(*args, **kwargs)
 
     def get_absolute_url(self):

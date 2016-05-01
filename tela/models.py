@@ -39,7 +39,6 @@ class Neighborhood(models.Model):
         LocalGovArea,
         verbose_name="Local Government Area",
         null=True,
-        on_delete=models.SET_NULL,
     )
 
     def __str__(self):
@@ -85,7 +84,6 @@ class Facilitator(Person):
         Neighborhood,
         null= True,
         blank=True,
-        on_delete=models.SET_NULL
     )
     account_number = models.CharField(blank=True, null=True, max_length=12)
     email = models.EmailField(blank=True, null=True)
@@ -96,7 +94,6 @@ class Center(models.Model):
     venue = models.ForeignKey(
         Venue,
         null=True,
-        on_delete=models.SET_NULL,
     )
 
     tutorial_types = models.ManyToManyField(
@@ -105,7 +102,6 @@ class Center(models.Model):
 
     facilitator = models.ForeignKey(
         Facilitator,
-        on_delete=models.SET_NULL,
         null=True,
     )
 
@@ -119,13 +115,11 @@ class Center(models.Model):
 class Beneficiary(Person):
     neighborhood = models.ForeignKey(
         Neighborhood,
-        on_delete=models.SET_NULL,
         null=True
     )
 
     center = models.ForeignKey(
         Center,
-        on_delete=models.SET_NULL,
         null=True,
     )
 
@@ -200,7 +194,6 @@ class Assessment(models.Model):
 class Enumerator(Person):
     neighborhood = models.ForeignKey(
         Neighborhood,
-        on_delete=models.SET_NULL,
         null=True
     )
 

@@ -9,6 +9,7 @@
 <body>
 <div id="header">
     <a href="/" class="logo">TELA Inventory Manager</a>
+    <div style="float:right">Welcome {{ request.user }} <a class="cart pull-right" href="{% url "admin:logout" %}">Logout</a></div>
 </div>
 <div id="subheader">
     <div class="cart">
