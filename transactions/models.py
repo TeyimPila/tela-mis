@@ -1,9 +1,9 @@
 from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
+from django.core.exceptions import ValidationError
 from django.db import models
 from inventory.models import Product
 from tela.models import Facilitator
-from django import  forms
 
 
 # Create your models here.
@@ -46,3 +46,13 @@ class CheckoutItem(models.Model):
 
     def __str__(self):
         return '{}'.format(self.id)
+
+    def clean(self, *args, **kwargs):
+        product = Product.objects.get(name=self.product)
+        if product.at_hand < self.quantity:
+            raise ValidationError("Only {} {}s are left".format(product.at_hand, product.name))
+        else:
+            product.at_hand -= self.quantity
+            product.out += self.quantity
+            product.save()
+        super(CheckoutItem, self).clean(*args, **kwargs)
