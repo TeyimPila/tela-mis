@@ -26,8 +26,20 @@
                     <li><a href="#" id="non-local-date">{{ today|unlocalize }}</a></li>
                 </ul>
             </div>
+            <ul>
+                <a style="text-align: center" class="pull-right  navbar-right "
+                   href="{% url "inventory:product_list" %}"><h3>Cart</h3></a>
+            </ul>
+
+            <div align="center">
+                <ul>
+                    <li><a href="/fr">fr</a></li>
+                    <li><a href="/en">en</a></li>
+                </ul>
+            </div>
 
         </div><!--/.navbar-collapse -->
+
         </div>
     </nav>
 

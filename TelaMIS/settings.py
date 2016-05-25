@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/1.8/ref/settings/
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
+
 from .secret import *
 # Part of internationalization
 from django.utils.translation import ugettext_lazy as _
@@ -48,6 +49,10 @@ INSTALLED_APPS = (
     'tela',
     'account',
     'import_export',
+    'inventory',
+    'transactions',
+    'cart',
+    'genericadmin'
 )
 
 MIDDLEWARE_CLASSES = (
@@ -77,6 +82,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'django.template.context_processors.i18n',
+                'cart.context_processors.cart',
             ],
 
             'loaders': [
@@ -182,6 +188,8 @@ SUIT_CONFIG = {
                     'tutorialtype',
                     'venue',
                     )},
+        {'app': 'inventory', 'icon': 'icon-briefcase', 'models': ('product',)},
+        {'app': 'transactions', 'icon': 'icon-random', 'models': ('checkout', 'checkoutitem')},
         # {'label': 'Settings', 'icon':'icon-cog', 'models': ('auth.user', 'auth.group')},
         # {'label': 'Support', 'icon':'icon-question-sign', 'url': '/support/'},
     ),
@@ -190,9 +198,11 @@ SUIT_CONFIG = {
     'LIST_PER_PAGE': 15
 }
 
-
 LOGIN_REDIRECT_URL = reverse_lazy('account:dashboard')
 LOGIN_URL = reverse_lazy('account:login')
 # LOGOUT_URL = reverse_lazy('account:logout')
-MEDIA_URL = '/media/' #base url to serve media files uploaded by users
+MEDIA_URL = '/media/'  # base url to serve media files uploaded by users
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
+
+# this is the key used by sessions to add items to cart
+CART_SESSION_ID = 'cart'
