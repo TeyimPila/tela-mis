@@ -55,4 +55,20 @@ class CheckoutItem(models.Model):
             product.at_hand -= self.quantity
             product.out += self.quantity
             product.save()
-        super(CheckoutItem, self).clean(*args, **kwargs)
+        super(CheckoutItem, self).clean()
+        # super(CheckoutItem, self).clean(*args, **kwargs) # previous version of the
+
+
+# class CheckinItem(models.Model):
+#     STATUS = (
+#         ('OK', 'OK'),
+#         ('Missing', 'Missing'),
+#         ('Damaged', 'Damaged'),
+#     )
+#
+#     checkoutitem = models.ForeignKey(CheckoutItem, related_name='check_In_Items')
+#     status = models.CharField(max_length=20, default=STATUS[0][0], choices=STATUS)
+#     quantity = models.PositiveIntegerField(default=1)
+#     # product = models.ForeignKey(Product, related_name='checked_in_items')
+
+
