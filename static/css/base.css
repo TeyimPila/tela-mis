@@ -1,0 +1,45 @@
+
+ul{
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #00A000;
+}
+
+li{
+    float: left;
+}
+
+li a{
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 36px;
+    text-decoration: none;
+}
+
+.logo{
+    color: #e7f4f9;
+    padding:14px 36px;
+    padding-left: 14px;
+}
+
+.welcome{
+    color: white;
+    padding:14px 36px;
+    padding-left: 14px;
+}
+
+
+li a:hover{
+    background-color: #111111;
+}
+
+.user{
+    display: block;
+    color: white;
+    padding: 14px 36px;
+    text-align: center;
+}
+

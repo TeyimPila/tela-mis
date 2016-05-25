@@ -12,9 +12,11 @@ https://docs.djangoproject.com/en/1.8/ref/settings/
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
+
 from .secret import *
 # Part of internationalization
 from django.utils.translation import ugettext_lazy as _
+from django.core.urlresolvers import reverse_lazy
 
 LANGUAGES = (
     ('en', _('English')),
@@ -45,6 +47,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'tela',
+    'account',
     'import_export',
     'inventory',
     'transactions',
@@ -69,7 +72,7 @@ ROOT_URLCONF = 'TelaMIS.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, "templates")],
+        'DIRS': [os.path.join(BASE_DIR, 'account', 'templates')],
         # 'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -137,7 +140,7 @@ LOCALE_PATHS = (
 STATIC_URL = '/static/'
 
 # This is where django looks for static files.
-# 
+#
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, "static"),
 )
@@ -195,8 +198,10 @@ SUIT_CONFIG = {
     'LIST_PER_PAGE': 15
 }
 
-# configuration for media content like images and videos
-MEDIA_URL = '/media/'
+LOGIN_REDIRECT_URL = reverse_lazy('account:dashboard')
+LOGIN_URL = reverse_lazy('account:login')
+# LOGOUT_URL = reverse_lazy('account:logout')
+MEDIA_URL = '/media/'  # base url to serve media files uploaded by users
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 
 # this is the key used by sessions to add items to cart

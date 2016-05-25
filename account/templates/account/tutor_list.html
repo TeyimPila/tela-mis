@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% block title %}Beneficiary List{% endblock %}
+
+{% block content %}
+
+   <div id="page-content-wrapper">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <table class="table table-striped table-hover ">
+                              <thead>
+                               <tr>
+                                 <th>id</th>
+                                 <th>First Name</th>
+                                 <th>Last Name</th>
+                                 <th>Gender</th>
+                                 <th>Major</th>
+                                 <th>Classification</th>
+                                 <th>email</th>
+                                 <th>phone_number</th>
+                               </tr>
+                             </thead>
+
+                             <tbody>
+                             {% for tut in tuts %}
+                               <tr>
+                                 <td>{{tut.tutor_id}}</td>
+                                 <td>{{tut.first_name}}</td>
+                                 <td>{{tut.last_name}}</td>
+                                 <td>{{tut.gender}}</td>
+                                 <td>{{tut.major}}</td>
+                                 <td>{{tut.classification}}</td>
+                                 <td>{{tut.email}}</td>
+                                 <td>{{tut.phone_number}}</td>
+                               </tr>
+                            {% endfor %}
+                           </tbody>
+                         </table>
+                        <a href="#menu-toggle" class="btn btn-default" id="menu-toggle">Toggle Menu</a><br/><br/>
+                        <div class="jumbotron">
+                             <h3>Tutors Summary</h3>
+                             <ul style="list-style: none">
+                                 <li>Number of Tutors: {{num_of_tutors}}</li>
+                                 <li>Freshmen : {{freshmen}}</li>
+                                 <li>Sophomores: {{sophmores}}</li>
+                                 <li>Juniors: {{juniors}}</li>
+                                 <li>Seniors: {{seniors}}</li>
+                                 <li>Graduates: {{graduates}}</li>
+                             </ul>
+                         </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+     <!--</div>-->
+
+    <!-- jQuery -->
+    <script src="js/jquery.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="js/bootstrap.min.js"></script>
+
+    <!-- Menu Toggle Script -->
+    <script>
+    $("#menu-toggle").click(function(e) {
+        e.preventDefault();
+        $("#wrapper").toggleClass("toggled");
+    });
+    </script>
+
+{% endblock %}
