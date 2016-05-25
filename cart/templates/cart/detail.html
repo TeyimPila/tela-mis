@@ -1,0 +1,69 @@
+{% extends "inventory/base.html" %}
+{% load static %}
+
+{% block title %}
+    Your checkout list
+{% endblock %}
+
+{% block content %}
+    <h1>Your Checkout List</h1>
+    <table class="cart">
+        <thead>
+        <tr>
+            <th>Image</th>
+            <th>Product</th>
+            <th>Quantity</th>
+            <th>Status</th>
+            <th>Remove</th>
+            {#                <th>Price</th>#}
+        </tr>
+        </thead>
+        <tbody>
+        {% for item in cart %}
+            {% with product=item.product %}
+                <tr>
+                    <td>
+                        <a href="{{ product.get_absolute_url }}">
+                            <img src="
+
+
+                                    {% if product.image %}{{ product.image.url }}{% else %}{% static "suit/inventory/img/no_image.png" %}{% endif %}">
+                        </a>
+                    </td>
+                    <td>{{ product.name }}</td>
+                    <td>
+                        <form action="{% url "cart:cart_add" product.id %}" method="post">
+                            {{ item.update_quantity_form.quantity }}
+                            {{ item.update_quantity_form.update }}
+                            <input type="submit" value="Update">
+                            {% csrf_token %}
+                        </form>
+                    </td>
+
+                    <td>
+                        <form action="{% url "cart:cart_add" product.id %}" method="post">
+                            {{ item.update_quantity_form.status }}
+                            {{ item.update_quantity_form.update }}
+                            <input type="submit" value="Update">
+                            {% csrf_token %}
+                        </form>
+                    </td>
+                    <td><a href="{% url "cart:cart_remove" product.id %}">Remove</a></td>
+                    {#                <td class="num">${{ item.total_price }}</td>#}
+                </tr>
+            {% endwith %}
+        {% endfor %}
+        <tr class="total">
+            <td>Total Items</td>
+            <td colspan="3"></td>
+            <td class="num">{{ cart.get_total_items }}</td>
+        </tr>
+        </tbody>
+    </table>
+    <p class="text-right">
+        <a href="{% url "inventory:product_list" %}" class="button light">Continue Selecting</a>
+        <a href="{% url "transactions:checkout_create" %}" class="button">
+            Checkout
+        </a>
+    </p>
+{% endblock %}

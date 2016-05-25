@@ -13,7 +13,7 @@ class LocalGovAreaAdmin(ImportExportActionModelAdmin):
 
 class VenueAdmin(ImportExportActionModelAdmin):
     list_display = ('address', 'coordinate',)
-    search_fields = ('address', 'coordinate',)
+    search_fields = ('address',)
 
 
 class TutorialTypeAdmin(ImportExportActionModelAdmin):
@@ -25,7 +25,7 @@ class TutorialTypeAdmin(ImportExportActionModelAdmin):
 class FacilitatorAdmin(ImportExportActionModelAdmin):
     list_display = ('full_name', 'gender', 'account_number', 'email', 'phone_number',)
     fields = ['first_name', 'last_name', 'gender', 'email', 'neighborhood', 'account_number', 'phone_number']
-    search_fields = ('full_name', 'first_name', 'last_name', 'account_number', 'email', 'phone_number',)
+    search_fields = ('first_name', 'last_name', 'account_number', 'email', 'phone_number',)
     raw_id_fields = ('neighborhood',)
     ordering = ['email']
     list_filter = ('gender', 'neighborhood',)
@@ -47,7 +47,7 @@ class BeneficiaryAdmin(ImportExportActionModelAdmin):
     fields = ['beneficiary_id', 'first_name', 'last_name', 'gender', 'neighborhood', 'center', 'age', 'is_in_school']
     raw_id_fields = ('neighborhood', 'center',)
     ordering = ['first_name', 'last_name']
-    search_fields = ('beneficiary_id', 'first_name', 'beneficiary_id',)
+    search_fields = ('beneficiary_id', 'first_name', 'last_name')
     list_filter = ('is_in_school', 'neighborhood', 'center', 'gender', 'age')
 
     # this is a test function that lets django list neighborhoods in the beneficiary table as links to those
@@ -88,20 +88,18 @@ class TutorAdmin(ImportExportActionModelAdmin):
 class PreAssessmentAdmin(ImportExportActionModelAdmin):
     list_display = ('beneficiary', 'enumerator',)
     raw_id_fields = ('beneficiary', 'enumerator',)
-    search_fields = ('enumerator', 'beneficiary')
     ordering = ['beneficiary', 'enumerator']
 
 
 class PostAssessmentAdmin(ImportExportActionModelAdmin):
     list_display = ('beneficiary', 'enumerator',)
     raw_id_fields = ('beneficiary', 'enumerator',)
-    search_fields = ('enumerator', 'beneficiary')
     ordering = ['beneficiary', 'enumerator']
 
 
 class NeighborhoodAdmin(ImportExportActionModelAdmin):
     list_display = ('name', 'lga')
-    search_fields = ('name', 'lga')
+    search_fields = ('name', )
     raw_id_fields = ('lga',)
     list_filter = ('lga',)
 

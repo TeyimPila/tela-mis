@@ -46,6 +46,10 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'tela',
     'import_export',
+    'inventory',
+    'transactions',
+    'cart',
+    'genericadmin'
 )
 
 MIDDLEWARE_CLASSES = (
@@ -75,6 +79,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'django.template.context_processors.i18n',
+                'cart.context_processors.cart',
             ],
 
             'loaders': [
@@ -180,6 +185,8 @@ SUIT_CONFIG = {
                     'tutorialtype',
                     'venue',
                     )},
+        {'app': 'inventory', 'icon': 'icon-briefcase', 'models': ('product',)},
+        {'app': 'transactions', 'icon': 'icon-random', 'models': ('checkout', 'checkoutitem')},
         # {'label': 'Settings', 'icon':'icon-cog', 'models': ('auth.user', 'auth.group')},
         # {'label': 'Support', 'icon':'icon-question-sign', 'url': '/support/'},
     ),
@@ -187,3 +194,10 @@ SUIT_CONFIG = {
     # misc
     'LIST_PER_PAGE': 15
 }
+
+# configuration for media content like images and videos
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
+
+# this is the key used by sessions to add items to cart
+CART_SESSION_ID = 'cart'
